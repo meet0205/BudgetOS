@@ -19,11 +19,48 @@ export interface BudgetData {
 
 export type ViewKey = 'dashboard' | 'transactions' | 'accounts' | 'categories';
 
-const NAV: { key: ViewKey; label: string; icon: string }[] = [
-  { key: 'dashboard', label: 'Dashboard', icon: '◫' },
-  { key: 'transactions', label: 'Transactions', icon: '⇄' },
-  { key: 'accounts', label: 'Accounts', icon: '▤' },
-  { key: 'categories', label: 'Categories', icon: '☰' },
+/** Crisp SF-Symbol-style line icons (stroke = currentColor). */
+const ICONS: Record<ViewKey, JSX.Element> = {
+  dashboard: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="3" width="7.5" height="7.5" rx="2" />
+      <rect x="13.5" y="3" width="7.5" height="7.5" rx="2" />
+      <rect x="3" y="13.5" width="7.5" height="7.5" rx="2" />
+      <rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2" />
+    </svg>
+  ),
+  transactions: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M6 4L3 7l3 3" />
+      <path d="M3 7h13" />
+      <path d="M18 20l3-3-3-3" />
+      <path d="M21 17H8" />
+    </svg>
+  ),
+  accounts: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2.5" y="5.5" width="19" height="13" rx="3" />
+      <path d="M2.5 9.5h19" />
+      <path d="M6 14.5h4" />
+    </svg>
+  ),
+  categories: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M8 6h13" />
+      <path d="M8 12h13" />
+      <path d="M8 18h13" />
+      <circle cx="3.5" cy="6" r="1.4" />
+      <circle cx="3.5" cy="12" r="1.4" />
+      <circle cx="3.5" cy="18" r="1.4" />
+    </svg>
+  ),
+};
+
+const NAV: { key: ViewKey; label: string }[] = [
+  { key: 'dashboard', label: 'Dashboard' },
+  { key: 'transactions', label: 'Transactions' },
+  { key: 'accounts', label: 'Accounts' },
+  { key: 'categories', label: 'Categories' },
 ];
 
 export function App() {
@@ -66,8 +103,8 @@ export function App() {
               className={`nav-item ${view === n.key ? 'active' : ''}`}
               onClick={() => setView(n.key)}
             >
-              <span className="nav-icon">{n.icon}</span>
-              {n.label}
+              <span className="nav-icon">{ICONS[n.key]}</span>
+              <span>{n.label}</span>
             </button>
           ))}
         </nav>
