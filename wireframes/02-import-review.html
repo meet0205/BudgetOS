@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Import queue &amp; receipt review — Budget App Wireframes</title>
+<link rel="stylesheet" href="wireframe.css">
+</head>
+<body>
+<div class="page">
+<div class="page-header">
+<h1>Import queue &amp; receipt review</h1>
+<p>Batch drag-and-drop import with per-file status, and the split-pane review screen with bidirectional image-to-field highlighting.</p>
+</div>
+<div class="page-nav">
+<a href="index.html">Index</a>
+<a href="01-shell-dashboard.html">Shell &amp; dashboard</a><a href="02-import-review.html">Import &amp; review</a><a href="03-income-tax.html">Income &amp; tax</a><a href="04-ledger-allocation-explore.html">Ledger, allocation, explore</a><a href="05-reports-bills-goals-settings.html">Reports, bills, goals, settings</a><a href="06-settings-hst-onboarding.html">Settings, HST, onboarding</a>
+</div>
+<div class="screen-label">Import — batch queue</div>
+<div style="background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 12px; padding: 14px;">
+
+<div style="border: 1px dashed var(--border-strong); border-radius: var(--radius); padding: 20px; text-align: center; margin-bottom: 14px;">
+<div style="font-size: 12px;">Drop receipts, pay stubs, or PDFs here</div>
+<div style="font-size: 10px; color: var(--text-muted); margin-top: 2px;">JPG, PNG, PDF &middot; or paste a screenshot with Ctrl+V</div>
+<button style="font-size: 11px; height: 28px; margin-top: 10px;">Choose files</button>
+</div>
+
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+<span style="font-size: 12px; font-weight: 500;">Queue &middot; 8 files</span>
+<div style="display: flex; gap: 6px;"><button style="font-size: 11px; height: 26px;">Accept all above 90%</button><button style="font-size: 11px; height: 26px;">Clear done</button></div>
+</div>
+
+<div style="height: 5px; background: var(--surface-1); border-radius: 3px; overflow: hidden; margin-bottom: 10px;"><div style="width: 62%; height: 100%; background: var(--fill-accent);"></div></div>
+
+<div style="border: 0.5px solid var(--border); border-radius: var(--radius); overflow: hidden;">
+<div style="display: grid; grid-template-columns: 1fr 88px 88px 70px 84px; gap: 8px; padding: 7px 10px; background: var(--surface-1); font-size: 10px; color: var(--text-muted);"><span>File</span><span>Type</span><span>Merchant</span><span>Amount</span><span>Status</span></div>
+<div style="display: grid; grid-template-columns: 1fr 88px 88px 70px 84px; gap: 8px; padding: 8px 10px; border-top: 0.5px solid var(--border); font-size: 11px;"><span>IMG_4821.jpg</span><span style="color: var(--text-secondary);">Receipt</span><span style="color: var(--text-secondary);">Walmart</span><span>$84.22</span><span style="font-size: 10px; background: var(--bg-success); color: var(--text-success); padding: 2px 6px; border-radius: var(--radius); text-align: center;">Parsed</span></div>
+<div style="display: grid; grid-template-columns: 1fr 88px 88px 70px 84px; gap: 8px; padding: 8px 10px; border-top: 0.5px solid var(--border); font-size: 11px;"><span>IMG_4822.jpg</span><span style="color: var(--text-secondary);">Receipt</span><span style="color: var(--text-secondary);">Sobeys</span><span>$31.05</span><span style="font-size: 10px; background: var(--bg-success); color: var(--text-success); padding: 2px 6px; border-radius: var(--radius); text-align: center;">Parsed</span></div>
+<div style="display: grid; grid-template-columns: 1fr 88px 88px 70px 84px; gap: 8px; padding: 8px 10px; border-top: 0.5px solid var(--border); font-size: 11px; background: var(--bg-warning);"><span>IMG_4823.jpg</span><span>Receipt</span><span>Unknown</span><span>$12.40</span><span style="font-size: 10px; border: 0.5px solid var(--border-warning); padding: 2px 6px; border-radius: var(--radius); text-align: center;">Review</span></div>
+<div style="display: grid; grid-template-columns: 1fr 88px 88px 70px 84px; gap: 8px; padding: 8px 10px; border-top: 0.5px solid var(--border); font-size: 11px;"><span>paystub_jul15.pdf</span><span style="color: var(--text-secondary);">Pay stub</span><span style="color: var(--text-secondary);">Maritime Co</span><span>$2,140</span><span style="font-size: 10px; background: var(--bg-success); color: var(--text-success); padding: 2px 6px; border-radius: var(--radius); text-align: center;">Parsed</span></div>
+<div style="display: grid; grid-template-columns: 1fr 88px 88px 70px 84px; gap: 8px; padding: 8px 10px; border-top: 0.5px solid var(--border); font-size: 11px; background: var(--bg-danger);"><span>paystub_jul01.pdf</span><span>Pay stub</span><span>Maritime Co</span><span>&mdash;</span><span style="font-size: 10px; border: 0.5px solid var(--text-danger); padding: 2px 6px; border-radius: var(--radius); text-align: center;">Column?</span></div>
+<div style="display: grid; grid-template-columns: 1fr 88px 88px 70px 84px; gap: 8px; padding: 8px 10px; border-top: 0.5px solid var(--border); font-size: 11px;"><span style="color: var(--text-secondary);">uber_jul_summary.pdf</span><span style="color: var(--text-muted);">Platform</span><span style="color: var(--text-muted);">Uber</span><span style="color: var(--text-muted);">&mdash;</span><span style="font-size: 10px; color: var(--text-muted); text-align: center;">Reading&hellip;</span></div>
+<div style="display: grid; grid-template-columns: 1fr 88px 88px 70px 84px; gap: 8px; padding: 8px 10px; border-top: 0.5px solid var(--border); font-size: 11px;"><span style="color: var(--text-secondary);">IMG_4830.jpg</span><span style="color: var(--text-muted);">&mdash;</span><span style="color: var(--text-muted);">&mdash;</span><span style="color: var(--text-muted);">&mdash;</span><span style="font-size: 10px; background: var(--bg-danger); color: var(--text-danger); padding: 2px 6px; border-radius: var(--radius); text-align: center;">OCR failed</span></div>
+<div style="display: grid; grid-template-columns: 1fr 88px 88px 70px 84px; gap: 8px; padding: 8px 10px; border-top: 0.5px solid var(--border); font-size: 11px;"><span style="color: var(--text-secondary);">IMG_4821 (1).jpg</span><span style="color: var(--text-muted);">Receipt</span><span style="color: var(--text-muted);">Walmart</span><span style="color: var(--text-muted);">$84.22</span><span style="font-size: 10px; color: var(--text-muted); text-align: center;">Duplicate?</span></div>
+</div>
+
+<div style="display: flex; justify-content: space-between; margin-top: 10px; font-size: 10px; color: var(--text-muted);"><span>5 parsed &middot; 2 need review &middot; 1 failed</span><span>AI enhancement used on 2 &middot; est. $0.04</span></div>
+</div>
+
+<div class="screen-label">Receipt review — split pane</div>
+<div style="background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 12px; overflow: hidden;">
+
+<div style="padding: 10px 14px; border-bottom: 0.5px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+<div style="display: flex; align-items: center; gap: 10px;"><span style="font-size: 13px; font-weight: 500;">IMG_4823.jpg</span><span style="font-size: 10px; background: var(--bg-warning); padding: 2px 7px; border-radius: var(--radius);">Confidence 0.62</span></div>
+<div style="display: flex; gap: 6px; align-items: center;"><span style="font-size: 10px; color: var(--text-muted);">3 of 8</span><button style="font-size: 11px; height: 26px;">&larr;</button><button style="font-size: 11px; height: 26px;">&rarr;</button></div>
+</div>
+
+<div style="display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);">
+<div style="border-right: 0.5px solid var(--border); padding: 12px; background: var(--surface-1);">
+<div style="background: var(--surface-2); border: 0.5px solid var(--border); border-radius: var(--radius); height: 268px; padding: 12px; font-family: var(--font-mono); font-size: 9px; color: var(--text-secondary); line-height: 1.9;">
+<div style="text-align: center; font-size: 10px; color: var(--text-primary);">PETRO-CANADA #4471</div>
+<div style="text-align: center;">1290 BARRINGTON ST</div>
+<div style="text-align: center;">HALIFAX NS</div>
+<div style="margin-top: 8px; border-top: 0.5px dashed var(--border); padding-top: 6px;"></div>
+<div style="background: var(--bg-warning); display: inline-block; padding: 0 3px;">2026-07-19  14:32</div>
+<div style="margin-top: 6px;">UNLEADED 87</div>
+<div>28.412 L @ 1.649</div>
+<div style="text-align: right;">46.85</div>
+<div style="margin-top: 6px; border-top: 0.5px dashed var(--border); padding-top: 6px;">SUBTOTAL        40.74</div>
+<div>HST 15%          6.11</div>
+<div style="color: var(--text-primary);">TOTAL           46.85</div>
+<div style="margin-top: 8px;">VISA ****4419</div>
+</div>
+<div style="font-size: 10px; color: var(--text-muted); margin-top: 6px;">Click a field to highlight its source</div>
+</div>
+
+<div style="padding: 12px;">
+<div style="display: grid; grid-template-columns: 74px 1fr; gap: 8px; align-items: center; margin-bottom: 8px;"><label style="font-size: 11px; color: var(--text-secondary);">Merchant</label><input type="text" value="Petro-Canada" style="font-size: 11px; height: 28px;" readonly></div>
+<div style="display: grid; grid-template-columns: 74px 1fr; gap: 8px; align-items: center; margin-bottom: 8px;"><label style="font-size: 11px; color: var(--text-secondary);">Date</label><input type="text" value="2026-07-19" style="font-size: 11px; height: 28px; border-color: var(--border-warning); background: var(--bg-warning);" readonly></div>
+<div style="display: grid; grid-template-columns: 74px 1fr 84px; gap: 8px; align-items: center; margin-bottom: 8px;"><label style="font-size: 11px; color: var(--text-secondary);">Category</label><select style="font-size: 11px; height: 28px;"><option>Vehicle &rsaquo; Fuel</option></select><span style="font-size: 10px; color: var(--text-muted);">from rule</span></div>
+
+<div style="border-top: 0.5px solid var(--border); margin: 10px 0; padding-top: 10px;">
+<div style="font-size: 11px; font-weight: 500; margin-bottom: 6px;">Line items</div>
+<div style="display: grid; grid-template-columns: 1fr 62px 62px; gap: 8px; margin-bottom: 6px;"><input type="text" value="Unleaded 87" style="font-size: 11px; height: 26px;" readonly><input type="text" value="28.412 L" style="font-size: 11px; height: 26px;" readonly><input type="text" value="46.85" style="font-size: 11px; height: 26px;" readonly></div>
+<div style="font-size: 10px; color: var(--text-muted);">$1.649 / L &middot; lowest in 3 months</div>
+</div>
+
+<div style="border-top: 0.5px solid var(--border); padding-top: 10px; margin-bottom: 10px;">
+<div style="display: flex; justify-content: space-between; font-size: 11px; padding: 2px 0;"><span style="color: var(--text-secondary);">Subtotal</span><span>$40.74</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 11px; padding: 2px 0;"><span style="color: var(--text-secondary);">HST 15%</span><span>$6.11</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 12px; padding: 3px 0; font-weight: 500;"><span>Total</span><span>$46.85</span></div>
+<div style="font-size: 10px; color: var(--text-success); margin-top: 2px;">&check; Reconciles exactly</div>
+</div>
+
+<div style="background: var(--bg-accent); border-radius: var(--radius); padding: 9px 10px; margin-bottom: 10px;">
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;"><span style="font-size: 11px; font-weight: 500;">Business use</span><div style="width: 26px; height: 15px; background: var(--fill-accent); border-radius: 8px; position: relative;"><div style="width: 11px; height: 11px; background: #fff; border-radius: 50%; position: absolute; right: 2px; top: 2px;"></div></div></div>
+<div style="display: flex; gap: 8px; align-items: center;"><input type="text" value="68" style="font-size: 11px; height: 26px; width: 52px;" readonly><span style="font-size: 11px;">% &middot; deducts $31.86 &middot; ITC $4.15</span></div>
+</div>
+
+<div style="display: flex; gap: 6px;"><button style="font-size: 11px; height: 30px; flex: 1;">Save and next</button><button style="font-size: 11px; height: 30px;">Skip</button></div>
+</div>
+</div>
+</div>
+
+</div>
+</body>
+</html>

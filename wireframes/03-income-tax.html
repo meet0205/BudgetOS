@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Income &amp; tax — Budget App Wireframes</title>
+<link rel="stylesheet" href="wireframe.css">
+</head>
+<body>
+<div class="page">
+<div class="page-header">
+<h1>Income &amp; tax</h1>
+<p>The YTD column gate (hard stop before any pay stub is accepted), manual income entry with live reconciliation, and the annual tax position breakdown.</p>
+</div>
+<div class="page-nav">
+<a href="index.html">Index</a>
+<a href="01-shell-dashboard.html">Shell &amp; dashboard</a><a href="02-import-review.html">Import &amp; review</a><a href="03-income-tax.html">Income &amp; tax</a><a href="04-ledger-allocation-explore.html">Ledger, allocation, explore</a><a href="05-reports-bills-goals-settings.html">Reports, bills, goals, settings</a><a href="06-settings-hst-onboarding.html">Settings, HST, onboarding</a>
+</div>
+<div class="screen-label">Pay stub review — column gate (hard stop, no override)</div>
+<div style="background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 12px; padding: 14px;">
+
+<div style="background: var(--bg-danger); border-radius: var(--radius); padding: 10px 12px; margin-bottom: 12px;">
+<div style="font-size: 12px; font-weight: 500;">Which column is this pay period?</div>
+<div style="font-size: 11px; margin-top: 2px; opacity: 0.85;">Column headers weren't readable. Picking wrong overstates your income ~14&times; and breaks the tax estimate.</div>
+</div>
+
+<div style="display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr); gap: 14px;">
+<div style="background: var(--surface-1); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 12px; font-family: var(--font-mono); font-size: 9px; color: var(--text-secondary); line-height: 1.9;">
+<div style="color: var(--text-primary); font-size: 10px;">MARITIME LOGISTICS CO</div>
+<div>Pay date 2026-07-01</div>
+<div style="margin-top: 8px; border-top: 0.5px dashed var(--border); padding-top: 6px; display: grid; grid-template-columns: 1fr 52px 62px; gap: 4px;"><span>Gross</span><span style="background: var(--bg-accent); text-align: right;">2,140.00</span><span style="background: var(--bg-warning); text-align: right;">29,960.00</span></div>
+<div style="display: grid; grid-template-columns: 1fr 52px 62px; gap: 4px;"><span>Fed tax</span><span style="background: var(--bg-accent); text-align: right;">284.10</span><span style="background: var(--bg-warning); text-align: right;">3,977.40</span></div>
+<div style="display: grid; grid-template-columns: 1fr 52px 62px; gap: 4px;"><span>Prov tax</span><span style="background: var(--bg-accent); text-align: right;">196.40</span><span style="background: var(--bg-warning); text-align: right;">2,749.60</span></div>
+<div style="display: grid; grid-template-columns: 1fr 52px 62px; gap: 4px;"><span>CPP</span><span style="background: var(--bg-accent); text-align: right;">118.66</span><span style="background: var(--bg-warning); text-align: right;">1,661.24</span></div>
+<div style="display: grid; grid-template-columns: 1fr 52px 62px; gap: 4px;"><span>EI</span><span style="background: var(--bg-accent); text-align: right;">35.11</span><span style="background: var(--bg-warning); text-align: right;">491.54</span></div>
+<div style="display: grid; grid-template-columns: 1fr 52px 62px; gap: 4px; border-top: 0.5px dashed var(--border); margin-top: 4px; padding-top: 4px;"><span style="color: var(--text-primary);">Net</span><span style="background: var(--bg-accent); text-align: right; color: var(--text-primary);">1,505.73</span><span style="background: var(--bg-warning); text-align: right;">21,080.22</span></div>
+</div>
+
+<div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-bottom: 10px;">
+<div style="border: 2px solid var(--border-accent); border-radius: var(--radius); padding: 12px;">
+<div style="font-size: 10px; color: var(--text-accent); margin-bottom: 2px;">Column A &middot; left</div>
+<div style="font-size: 20px; font-weight: 500;">$2,140.00</div>
+<div style="font-size: 11px; color: var(--text-secondary); margin: 4px 0 8px;">Net $1,505.73</div>
+<div style="font-size: 10px; color: var(--text-success);">&check; Balances exactly</div>
+<div style="font-size: 10px; color: var(--text-secondary); margin-top: 2px;">Consistent with 14 periods elapsed</div>
+<button style="width: 100%; font-size: 11px; height: 28px; margin-top: 10px;">This is the period</button>
+</div>
+<div style="border: 0.5px solid var(--border); border-radius: var(--radius); padding: 12px;">
+<div style="font-size: 10px; color: var(--text-muted); margin-bottom: 2px;">Column B &middot; right</div>
+<div style="font-size: 20px; font-weight: 500;">$29,960.00</div>
+<div style="font-size: 11px; color: var(--text-secondary); margin: 4px 0 8px;">Net $21,080.22</div>
+<div style="font-size: 10px; color: var(--text-success);">&check; Balances exactly</div>
+<div style="font-size: 10px; color: var(--text-secondary); margin-top: 2px;">14.0&times; column A &mdash; likely YTD</div>
+<button style="width: 100%; font-size: 11px; height: 28px; margin-top: 10px;">This is the period</button>
+</div>
+</div>
+<div style="background: var(--surface-1); border-radius: var(--radius); padding: 10px;">
+<div style="font-size: 11px; font-weight: 500; margin-bottom: 4px;">Cross-check against last stub</div>
+<div style="font-size: 11px; color: var(--text-secondary); line-height: 1.7;">Jun 15 YTD gross was $27,820.<br>$27,820 + $2,140 = $29,960 &check;</div>
+<div style="font-size: 10px; color: var(--text-success); margin-top: 4px;">Consistent with column A as the period.</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="screen-label">Manual income entry — live reconciliation</div>
+<div style="background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 12px; padding: 14px;">
+<div style="display: flex; gap: 2px; background: var(--surface-1); border-radius: var(--radius); padding: 2px; width: fit-content; margin-bottom: 14px;">
+<span style="font-size: 11px; padding: 4px 12px; background: var(--surface-2); border-radius: 6px;">Employment</span>
+<span style="font-size: 11px; padding: 4px 12px; color: var(--text-secondary);">Self-employment</span>
+<span style="font-size: 11px; padding: 4px 12px; color: var(--text-secondary);">Other</span>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px;">
+<div>
+<div style="display: grid; grid-template-columns: 88px 1fr; gap: 8px; align-items: center; margin-bottom: 8px;"><label style="font-size: 11px; color: var(--text-secondary);">Employer</label><input type="text" value="Maritime Logistics Co" style="font-size: 11px; height: 28px;" readonly></div>
+<div style="display: grid; grid-template-columns: 88px 1fr; gap: 8px; align-items: center; margin-bottom: 8px;"><label style="font-size: 11px; color: var(--text-secondary);">Pay date</label><input type="text" value="2026-07-15" style="font-size: 11px; height: 28px;" readonly></div>
+<div style="display: grid; grid-template-columns: 88px 1fr; gap: 8px; align-items: center; margin-bottom: 8px;"><label style="font-size: 11px; color: var(--text-secondary);">Gross</label><input type="text" value="$2,140.00" style="font-size: 11px; height: 28px;" readonly></div>
+<div style="display: grid; grid-template-columns: 88px 1fr; gap: 8px; align-items: center; margin-bottom: 8px;"><label style="font-size: 11px; color: var(--text-secondary);">Net</label><input type="text" value="$1,505.73" style="font-size: 11px; height: 28px;" readonly></div>
+<div style="display: grid; grid-template-columns: 88px 1fr; gap: 8px; align-items: center;"><label style="font-size: 11px; color: var(--text-secondary);">YTD gross</label><input type="text" value="$32,100.00" style="font-size: 11px; height: 28px;" readonly></div>
+<div style="font-size: 10px; color: var(--text-success); margin-top: 6px; margin-left: 96px;">Continues from Jul 1 &check;</div>
+</div>
+
+<div>
+<div style="font-size: 11px; font-weight: 500; margin-bottom: 6px;">Deductions</div>
+<div style="display: grid; grid-template-columns: 1fr 76px 24px; gap: 6px; margin-bottom: 5px;"><select style="font-size: 11px; height: 26px;"><option>Federal tax</option></select><input type="text" value="284.10" style="font-size: 11px; height: 26px;" readonly><button style="font-size: 11px; height: 26px; padding: 0;">&times;</button></div>
+<div style="display: grid; grid-template-columns: 1fr 76px 24px; gap: 6px; margin-bottom: 5px;"><select style="font-size: 11px; height: 26px;"><option>Provincial tax</option></select><input type="text" value="196.40" style="font-size: 11px; height: 26px;" readonly><button style="font-size: 11px; height: 26px; padding: 0;">&times;</button></div>
+<div style="display: grid; grid-template-columns: 1fr 76px 24px; gap: 6px; margin-bottom: 5px;"><select style="font-size: 11px; height: 26px;"><option>CPP</option></select><input type="text" value="118.66" style="font-size: 11px; height: 26px;" readonly><button style="font-size: 11px; height: 26px; padding: 0;">&times;</button></div>
+<div style="display: grid; grid-template-columns: 1fr 76px 24px; gap: 6px; margin-bottom: 8px;"><select style="font-size: 11px; height: 26px;"><option>EI</option></select><input type="text" value="35.11" style="font-size: 11px; height: 26px;" readonly><button style="font-size: 11px; height: 26px; padding: 0;">&times;</button></div>
+<button style="font-size: 11px; height: 26px; width: 100%;">+ Add deduction</button>
+<div style="background: var(--bg-success); border-radius: var(--radius); padding: 9px 10px; margin-top: 10px;">
+<div style="display: flex; justify-content: space-between; font-size: 11px;"><span>2,140.00 &minus; 634.27</span><span style="font-weight: 500;">= 1,505.73</span></div>
+<div style="font-size: 10px; margin-top: 2px; opacity: 0.85;">Balances. Ready to save.</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="screen-label">Tax position — annual breakdown</div>
+<div style="background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 12px; padding: 14px;">
+
+<div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px;">
+<div>
+<div style="font-size: 11px; color: var(--text-muted);">Estimated still owing at filing</div>
+<div style="font-size: 28px; font-weight: 500; margin: 2px 0;">$1,842</div>
+<div style="font-size: 10px; color: var(--text-muted);">Planning estimate &middot; not a filing. Brackets verified 2026-01-14.</div>
+</div>
+<div style="text-align: right;">
+<div style="font-size: 11px; color: var(--text-muted);">Reserved so far</div>
+<div style="font-size: 20px; font-weight: 500; color: var(--text-success);">$1,420</div>
+<div style="font-size: 10px; color: var(--text-secondary);">Set aside $211 this month</div>
+</div>
+</div>
+
+<div style="height: 9px; background: var(--surface-1); border-radius: 5px; overflow: hidden; display: flex; margin-bottom: 5px;">
+<div style="width: 58%; background: #1D9E75;"></div><div style="width: 20%; background: #EF9F27;"></div><div style="width: 22%; background: #F09595;"></div>
+</div>
+<div style="display: flex; justify-content: space-between; font-size: 10px; color: var(--text-muted); margin-bottom: 14px;"><span>Withheld $4,180</span><span>Reserved $1,420</span><span>Gap $422</span></div>
+
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px;">
+<div>
+<div style="font-size: 11px; font-weight: 500; margin-bottom: 6px;">Income</div>
+<div style="display: flex; justify-content: space-between; font-size: 11px; padding: 4px 0; border-bottom: 0.5px solid var(--border);"><span style="color: var(--text-secondary);">Employment gross</span><span>$29,960</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 11px; padding: 4px 0; border-bottom: 0.5px solid var(--border);"><span style="color: var(--text-secondary);">Uber gross fares</span><span>$8,410</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 11px; padding: 4px 0; border-bottom: 0.5px solid var(--border);"><span style="color: var(--text-secondary);">&minus; Platform fees</span><span>&minus;$1,682</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 11px; padding: 4px 0; border-bottom: 0.5px solid var(--border);"><span style="color: var(--text-secondary);">&minus; Vehicle @ 68%</span><span>&minus;$1,438</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 11px; padding: 4px 0; border-bottom: 0.5px solid var(--border);"><span style="color: var(--text-secondary);">&minus; CCA (entered)</span><span>&minus;$0</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 12px; padding: 5px 0; font-weight: 500;"><span>Combined taxable</span><span>$35,250</span></div>
+<div style="font-size: 10px; color: var(--text-muted);">Projected annual $60,428</div>
+</div>
+<div>
+<div style="font-size: 11px; font-weight: 500; margin-bottom: 6px;">Estimated liability</div>
+<div style="display: flex; justify-content: space-between; font-size: 11px; padding: 4px 0; border-bottom: 0.5px solid var(--border);"><span style="color: var(--text-secondary);">Federal tax</span><span>$3,412</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 11px; padding: 4px 0; border-bottom: 0.5px solid var(--border);"><span style="color: var(--text-secondary);">Nova Scotia tax</span><span>$2,984</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 11px; padding: 4px 0; border-bottom: 0.5px solid var(--border);"><span style="color: var(--text-secondary);">CPP &mdash; employment</span><span>$1,661</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 11px; padding: 4px 6px; border-bottom: 0.5px solid var(--border); background: var(--bg-warning);"><span>CPP &mdash; self-employed &times;2</span><span>$524</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 11px; padding: 4px 0; border-bottom: 0.5px solid var(--border);"><span style="color: var(--text-secondary);">EI</span><span>$492</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 12px; padding: 5px 0; font-weight: 500;"><span>Total estimated</span><span>$9,073</span></div>
+<div style="font-size: 10px; color: var(--text-muted);">Reserve held at 1.10&times; the gap</div>
+</div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 12px;">
+<div style="background: var(--bg-danger); border-radius: var(--radius); padding: 10px;">
+<div style="font-size: 11px; font-weight: 500;">Instalments likely required</div>
+<div style="font-size: 10px; margin-top: 2px; opacity: 0.85;">Projected owing crosses the CRA threshold. Verify due dates.</div>
+<button style="font-size: 10px; height: 24px; margin-top: 6px;">Set up schedule</button>
+</div>
+<div style="background: var(--bg-warning); border-radius: var(--radius); padding: 10px;">
+<div style="font-size: 11px; font-weight: 500;">HST &mdash; separate obligation</div>
+<div style="font-size: 10px; margin-top: 2px; opacity: 0.85;">Collected $1,092 &middot; ITCs $284 &middot; net $808</div>
+<button style="font-size: 10px; height: 24px; margin-top: 6px;">Open HST</button>
+</div>
+</div>
+</div>
+
+</div>
+</body>
+</html>

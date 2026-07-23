@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>App shell &amp; dashboard — Budget App Wireframes</title>
+<link rel="stylesheet" href="wireframe.css">
+</head>
+<body>
+<div class="page">
+<div class="page-header">
+<h1>App shell &amp; dashboard</h1>
+<p>Left navigation, period controls, metric cards, category donut, income-to-allocation Sankey, upcoming bills, category trend.</p>
+</div>
+<div class="page-nav">
+<a href="index.html">Index</a>
+<a href="01-shell-dashboard.html">Shell &amp; dashboard</a><a href="02-import-review.html">Import &amp; review</a><a href="03-income-tax.html">Income &amp; tax</a><a href="04-ledger-allocation-explore.html">Ledger, allocation, explore</a><a href="05-reports-bills-goals-settings.html">Reports, bills, goals, settings</a><a href="06-settings-hst-onboarding.html">Settings, HST, onboarding</a>
+</div>
+<div class="screen-label">Desktop shell with dashboard</div>
+
+<div style="border: 0.5px solid var(--border); border-radius: 12px; overflow: hidden; background: var(--surface-2);">
+<div style="display: flex; min-height: 560px;">
+
+<div style="width: 172px; border-right: 0.5px solid var(--border); background: var(--surface-1); flex-shrink: 0; display: flex; flex-direction: column;">
+<div style="padding: 14px 12px; border-bottom: 0.5px solid var(--border);">
+<div style="font-size: 13px; font-weight: 500;">Budget</div>
+<div style="font-size: 10px; color: var(--text-muted);">July 2026 &middot; NS</div>
+</div>
+<div style="padding: 8px 6px; flex: 1;">
+<div style="padding: 6px 8px; background: var(--surface-2); border-radius: var(--radius); margin-bottom: 1px; font-size: 12px;">Dashboard</div>
+<div style="padding: 6px 8px; margin-bottom: 1px; font-size: 12px; color: var(--text-secondary);">Transactions</div>
+<div style="padding: 6px 8px; margin-bottom: 1px; font-size: 12px; color: var(--text-secondary); display: flex; justify-content: space-between;"><span>Import</span><span style="font-size: 9px; background: var(--bg-accent); color: var(--text-accent); padding: 1px 5px; border-radius: 8px;">3</span></div>
+<div style="padding: 6px 8px; margin-bottom: 1px; font-size: 12px; color: var(--text-secondary);">Income</div>
+<div style="padding: 6px 8px; margin-bottom: 1px; font-size: 12px; color: var(--text-secondary);">Tax</div>
+<div style="padding: 6px 8px; margin-bottom: 1px; font-size: 12px; color: var(--text-secondary);">Allocation</div>
+<div style="padding: 6px 8px; margin-bottom: 1px; font-size: 12px; color: var(--text-secondary);">Bills</div>
+<div style="padding: 6px 8px; margin-bottom: 1px; font-size: 12px; color: var(--text-secondary);">Reports</div>
+<div style="padding: 6px 8px; margin-bottom: 1px; font-size: 12px; color: var(--text-secondary);">Explore</div>
+<div style="padding: 6px 8px; font-size: 12px; color: var(--text-secondary);">Goals</div>
+</div>
+<div style="padding: 8px 6px; border-top: 0.5px solid var(--border);">
+<div style="padding: 6px 8px; font-size: 12px; color: var(--text-secondary);">Settings</div>
+<div style="padding: 6px 8px; font-size: 10px; color: var(--text-muted);">All synced</div>
+</div>
+</div>
+
+<div style="flex: 1; min-width: 0;">
+<div style="padding: 10px 16px; border-bottom: 0.5px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+<div style="display: flex; align-items: center; gap: 14px;">
+<span style="font-size: 15px; font-weight: 500;">Dashboard</span>
+<div style="display: flex; gap: 2px; background: var(--surface-1); border-radius: var(--radius); padding: 2px;">
+<span style="font-size: 11px; padding: 3px 10px; background: var(--surface-2); border-radius: 6px;">Month</span>
+<span style="font-size: 11px; padding: 3px 10px; color: var(--text-secondary);">Quarter</span>
+<span style="font-size: 11px; padding: 3px 10px; color: var(--text-secondary);">Year</span>
+</div>
+</div>
+<div style="display: flex; gap: 8px; align-items: center;">
+<span style="font-size: 11px; color: var(--text-secondary);">vs last year</span>
+<div style="width: 26px; height: 15px; background: var(--surface-1); border: 0.5px solid var(--border-strong); border-radius: 8px; position: relative;"><div style="width: 11px; height: 11px; background: var(--text-muted); border-radius: 50%; position: absolute; left: 2px; top: 1px;"></div></div>
+<button style="font-size: 11px; height: 28px;">Customise</button>
+</div>
+</div>
+
+<div style="padding: 14px 16px;">
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 12px;">
+<div style="background: var(--surface-1); border-radius: var(--radius); padding: 10px;"><div style="font-size: 10px; color: var(--text-muted);">Safe to spend</div><div style="font-size: 19px; font-weight: 500; margin: 2px 0;">$412.80</div><div style="font-size: 10px; color: var(--text-secondary);">$29.48/day &middot; 14 left</div></div>
+<div style="background: var(--bg-warning); border-radius: var(--radius); padding: 10px;"><div style="font-size: 10px; color: var(--text-primary); opacity: 0.7;">Tax reserved</div><div style="font-size: 19px; font-weight: 500; margin: 2px 0;">$1,420</div><div style="font-size: 10px; opacity: 0.7;">Est. owing $1,842</div></div>
+<div style="background: var(--surface-1); border-radius: var(--radius); padding: 10px;"><div style="font-size: 10px; color: var(--text-muted);">Spent</div><div style="font-size: 19px; font-weight: 500; margin: 2px 0;">$1,847</div><div style="font-size: 10px; color: var(--text-danger);">12% above pace</div></div>
+<div style="background: var(--surface-1); border-radius: var(--radius); padding: 10px;"><div style="font-size: 10px; color: var(--text-muted);">Uber net YTD</div><div style="font-size: 19px; font-weight: 500; margin: 2px 0;">$5,290</div><div style="font-size: 10px; color: var(--text-secondary);">After 68% expenses</div></div>
+</div>
+
+<div style="background: var(--bg-accent); border-radius: var(--radius); padding: 10px 12px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
+<div><div style="font-size: 12px; font-weight: 500;">Dining is 34% above your 6-month average</div><div style="font-size: 11px; opacity: 0.8; margin-top: 1px;">$356 this month vs $266 typical</div></div>
+<button style="font-size: 11px; height: 28px; flex-shrink: 0;">See breakdown</button>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-bottom: 12px;">
+<div style="border: 0.5px solid var(--border); border-radius: var(--radius); padding: 12px;">
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+<span style="font-size: 12px; font-weight: 500;">Spend by category</span>
+<div style="display: flex; gap: 5px;"><select style="font-size: 10px; height: 24px;"><option>Donut</option><option>Bar</option></select><select style="font-size: 10px; height: 24px;"><option>Category</option><option>Merchant</option></select></div>
+</div>
+<div style="display: flex; gap: 12px; align-items: center;">
+<svg viewBox="0 0 100 100" style="width: 88px; height: 88px; flex-shrink: 0;">
+<circle cx="50" cy="50" r="38" fill="none" stroke="#7F77DD" stroke-width="17" stroke-dasharray="72 167"/>
+<circle cx="50" cy="50" r="38" fill="none" stroke="#1D9E75" stroke-width="17" stroke-dasharray="52 187" stroke-dashoffset="-72"/>
+<circle cx="50" cy="50" r="38" fill="none" stroke="#D85A30" stroke-width="17" stroke-dasharray="44 195" stroke-dashoffset="-124"/>
+<circle cx="50" cy="50" r="38" fill="none" stroke="#B4B2A9" stroke-width="17" stroke-dasharray="71 168" stroke-dashoffset="-168"/>
+</svg>
+<div style="flex: 1;">
+<div style="display: flex; justify-content: space-between; font-size: 11px; padding: 2px 0;"><span><span style="display:inline-block;width:7px;height:7px;background:#7F77DD;border-radius:2px;margin-right:6px;"></span>Groceries</span><span style="font-weight:500;">$584</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 11px; padding: 2px 0;"><span><span style="display:inline-block;width:7px;height:7px;background:#1D9E75;border-radius:2px;margin-right:6px;"></span>Vehicle</span><span style="font-weight:500;">$421</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 11px; padding: 2px 0;"><span><span style="display:inline-block;width:7px;height:7px;background:#D85A30;border-radius:2px;margin-right:6px;"></span>Dining</span><span style="font-weight:500;">$356</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 11px; padding: 2px 0;"><span><span style="display:inline-block;width:7px;height:7px;background:#B4B2A9;border-radius:2px;margin-right:6px;"></span>Other</span><span style="font-weight:500;">$486</span></div>
+<div style="font-size: 10px; color: var(--text-muted); margin-top: 5px;">Click a slice to filter</div>
+</div>
+</div>
+</div>
+
+<div style="border: 0.5px solid var(--border); border-radius: var(--radius); padding: 12px;">
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+<span style="font-size: 12px; font-weight: 500;">Income to allocation</span>
+<select style="font-size: 10px; height: 24px;"><option>Sankey</option><option>Bar</option></select>
+</div>
+<svg viewBox="0 0 300 96" style="width: 100%; height: 92px;">
+<rect x="4" y="12" width="12" height="40" fill="#1D9E75" rx="2"/><rect x="4" y="58" width="12" height="24" fill="#5DCAA5" rx="2"/>
+<path d="M16 14 C88 14, 88 8, 148 8 L148 32 C88 32, 88 38, 16 38 Z" fill="#9FE1CB" opacity="0.7"/>
+<path d="M16 40 C88 40, 88 36, 148 36 L148 54 C88 54, 88 52, 16 52 Z" fill="#9FE1CB" opacity="0.5"/>
+<path d="M16 59 C88 59, 88 58, 148 58 L148 82 C88 82, 88 82, 16 82 Z" fill="#FAC775" opacity="0.7"/>
+<rect x="148" y="8" width="12" height="24" fill="#7F77DD" rx="2"/><rect x="148" y="36" width="12" height="18" fill="#AFA9EC" rx="2"/><rect x="148" y="58" width="12" height="24" fill="#EF9F27" rx="2"/>
+<path d="M160 10 C218 10, 218 12, 278 12 L278 30 C218 30, 218 30, 160 30 Z" fill="#CECBF6" opacity="0.65"/>
+<path d="M160 38 C218 38, 218 40, 278 40 L278 52 C218 52, 218 52, 160 52 Z" fill="#CECBF6" opacity="0.45"/>
+<rect x="278" y="12" width="12" height="18" fill="#534AB7" rx="2"/><rect x="278" y="40" width="12" height="12" fill="#7F77DD" rx="2"/>
+<text x="2" y="8" font-size="7" fill="#888780">T4 pay</text><text x="2" y="92" font-size="7" fill="#888780">Uber</text>
+<text x="130" y="92" font-size="7" fill="#888780">Tax reserve</text><text x="196" y="8" font-size="7" fill="#888780">Living</text><text x="236" y="64" font-size="7" fill="#888780">Savings</text>
+</svg>
+</div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px;">
+<div style="border: 0.5px solid var(--border); border-radius: var(--radius); padding: 12px;">
+<div style="font-size: 12px; font-weight: 500; margin-bottom: 8px;">Upcoming bills</div>
+<div style="display: flex; justify-content: space-between; font-size: 11px; padding: 4px 0; border-bottom: 0.5px solid var(--border);"><span>Rent &middot; Aug 1</span><span style="font-weight:500;">$1,450</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 11px; padding: 4px 0; border-bottom: 0.5px solid var(--border);"><span>Hydro &middot; Aug 4</span><span style="font-weight:500;">$88</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 11px; padding: 4px 0;"><span>Phone &middot; Aug 6</span><span style="font-weight:500;">$65</span></div>
+</div>
+<div style="border: 0.5px solid var(--border); border-radius: var(--radius); padding: 12px;">
+<div style="font-size: 12px; font-weight: 500; margin-bottom: 8px;">Category trend &middot; 6 months</div>
+<svg viewBox="0 0 260 70" style="width: 100%; height: 66px;">
+<path d="M6 56 L48 50 L90 44 L132 47 L174 38 L216 34 L254 30 L254 66 L6 66 Z" fill="#CECBF6" opacity="0.75"/>
+<path d="M6 62 L48 58 L90 56 L132 57 L174 52 L216 50 L254 48 L254 66 L6 66 Z" fill="#9FE1CB" opacity="0.75"/>
+<text x="6" y="8" font-size="7" fill="#888780">Groceries</text><text x="52" y="8" font-size="7" fill="#888780">Vehicle</text>
+</svg>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Budget App — Desktop Wireframes</title>
+<link rel="stylesheet" href="wireframe.css">
+</head>
+<body>
+<div class="page">
+<div class="page-header">
+<h1>Desktop wireframes</h1>
+<p>Personal budget planner &amp; money management &mdash; Canada / Nova Scotia. Twenty screens across six pages. Open any file directly in a browser; no build step, no network.</p>
+</div>
+
+<div style="background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 20px;">
+<a href="01-shell-dashboard.html" style="display: block; padding: 12px 14px; border-bottom: 0.5px solid var(--border); text-decoration: none; color: inherit;">
+<div style="font-size: 13px; font-weight: 500;">01 &mdash; App shell &amp; dashboard</div>
+<div style="font-size: 11px; color: var(--text-secondary); margin-top: 2px;">Left navigation, period controls, metric cards, category donut, income-to-allocation Sankey, upcoming bills, category trend</div>
+</a>
+<a href="02-import-review.html" style="display: block; padding: 12px 14px; border-bottom: 0.5px solid var(--border); text-decoration: none; color: inherit;">
+<div style="font-size: 13px; font-weight: 500;">02 &mdash; Import queue &amp; receipt review</div>
+<div style="font-size: 11px; color: var(--text-secondary); margin-top: 2px;">Batch drag-and-drop with per-file status, split-pane review with bidirectional image-to-field highlighting</div>
+</a>
+<a href="03-income-tax.html" style="display: block; padding: 12px 14px; border-bottom: 0.5px solid var(--border); text-decoration: none; color: inherit;">
+<div style="font-size: 13px; font-weight: 500;">03 &mdash; Income &amp; tax</div>
+<div style="font-size: 11px; color: var(--text-secondary); margin-top: 2px;">The YTD column gate, manual income entry with live reconciliation, annual tax position breakdown</div>
+</a>
+<a href="04-ledger-allocation-explore.html" style="display: block; padding: 12px 14px; border-bottom: 0.5px solid var(--border); text-decoration: none; color: inherit;">
+<div style="font-size: 13px; font-weight: 500;">04 &mdash; Ledger, allocation &amp; explore</div>
+<div style="font-size: 11px; color: var(--text-secondary); margin-top: 2px;">Transaction ledger with inline split expansion, allocation buckets with locked tax reserve, item-level filter</div>
+</a>
+<a href="05-reports-bills-goals-settings.html" style="display: block; padding: 12px 14px; border-bottom: 0.5px solid var(--border); text-decoration: none; color: inherit;">
+<div style="font-size: 13px; font-weight: 500;">05 &mdash; Reports, bills, goals &amp; AI settings</div>
+<div style="font-size: 11px; color: var(--text-secondary); margin-top: 2px;">Monthly report with year-over-year, bill creep detection, trade-off slider, AI enhancement pane</div>
+</a>
+<a href="06-settings-hst-onboarding.html" style="display: block; padding: 12px 14px; text-decoration: none; color: inherit;">
+<div style="font-size: 13px; font-weight: 500;">06 &mdash; Tax settings, business use, HST &amp; onboarding</div>
+<div style="font-size: 11px; color: var(--text-secondary); margin-top: 2px;">Province and bracket freshness, manual odometer and CCA, HST as separate obligation, first-run flow</div>
+</a>
+</div>
+
+<div style="background: var(--surface-1); border-radius: 12px; padding: 14px;">
+<div style="font-size: 13px; font-weight: 500; margin-bottom: 8px;">Decisions these wireframes encode</div>
+<div style="font-size: 12px; color: var(--text-secondary); line-height: 1.7;">
+<p style="margin: 0 0 8px;"><strong style="color: var(--text-primary); font-weight: 500;">Import is the primary intake, not camera.</strong> Desktop-first means receipts arrive as files. The queue table with per-file status and bulk accept-above-threshold is what makes 30 files tolerable.</p>
+<p style="margin: 0 0 8px;"><strong style="color: var(--text-primary); font-weight: 500;">The column gate shows its evidence.</strong> Rather than just asking which column is the pay period, it shows the 14&times; ratio, the exact-balance check on both, and the cross-check against the previous stub. Evidence makes a hard stop feel reasonable rather than obstructive.</p>
+<p style="margin: 0 0 8px;"><strong style="color: var(--text-primary); font-weight: 500;">Tax reserve is visually distinct everywhere.</strong> Never merged into safe-to-spend. It appears on its own tint, with its own bucket row, locked.</p>
+<p style="margin: 0;"><strong style="color: var(--text-primary); font-weight: 500;">CPP self-employed sits on a warning tint.</strong> It's the line most likely to surprise, and burying it in a total is how people get caught out in April.</p>
+</div>
+</div>
+
+<div style="background: var(--bg-warning); border-radius: 12px; padding: 14px; margin-top: 14px;">
+<div style="font-size: 13px; font-weight: 500; margin-bottom: 6px;">Numbers shown are illustrative</div>
+<div style="font-size: 12px; line-height: 1.7; opacity: 0.9;">Every dollar figure, bracket, and rate in these wireframes is placeholder data for layout purposes. Real CRA values &mdash; federal and Nova Scotia brackets, basic personal amounts, CPP/EI rates and maximums, CPP2, the instalment threshold &mdash; must be populated from CRA sources before feature 05 is built.</div>
+</div>
+
+</div>
+</body>
+</html>

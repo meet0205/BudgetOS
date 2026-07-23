@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tax settings, business use, HST &amp; onboarding — Budget App Wireframes</title>
+<link rel="stylesheet" href="wireframe.css">
+</head>
+<body>
+<div class="page">
+<div class="page-header">
+<h1>Tax settings, business use, HST &amp; onboarding</h1>
+<p>Province and bracket freshness, business-use percentage with the manual odometer and CCA notes, HST as a separate obligation, warranties and subscriptions, and first-run onboarding.</p>
+</div>
+<div class="page-nav">
+<a href="index.html">Index</a>
+<a href="01-shell-dashboard.html">Shell &amp; dashboard</a><a href="02-import-review.html">Import &amp; review</a><a href="03-income-tax.html">Income &amp; tax</a><a href="04-ledger-allocation-explore.html">Ledger, allocation, explore</a><a href="05-reports-bills-goals-settings.html">Reports, bills, goals, settings</a><a href="06-settings-hst-onboarding.html">Settings, HST, onboarding</a>
+</div>
+<div class="screen-label">Settings — tax &amp; province, business use</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px;">
+
+<div style="background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 12px; padding: 12px;">
+<div style="display: grid; grid-template-columns: 96px 1fr; gap: 8px; align-items: center; margin-bottom: 8px;"><label style="font-size: 11px; color: var(--text-secondary);">Province</label><select style="font-size: 11px; height: 28px;"><option>Nova Scotia</option><option>Ontario</option><option>British Columbia</option><option>Alberta</option></select></div>
+<div style="display: grid; grid-template-columns: 96px 1fr; gap: 8px; align-items: center; margin-bottom: 8px;"><label style="font-size: 11px; color: var(--text-secondary);">Tax year</label><select style="font-size: 11px; height: 28px;"><option>2026</option><option>2025</option></select></div>
+<div style="display: grid; grid-template-columns: 96px 1fr; gap: 8px; align-items: center; margin-bottom: 10px;"><label style="font-size: 11px; color: var(--text-secondary);">Reserve buffer</label><div style="display: flex; gap: 8px; align-items: center;"><input type="range" min="100" max="130" value="110" style="flex: 1;"><span style="font-size: 11px; font-weight: 500; min-width: 34px;">1.10&times;</span></div></div>
+<div style="font-size: 10px; color: var(--text-muted); margin-bottom: 12px;">Reserving above the estimate absorbs error. Over-reserving means a surplus in April; under-reserving means finding cash you already spent.</div>
+
+<div style="border-top: 0.5px solid var(--border); padding-top: 10px;">
+<div style="font-size: 11px; font-weight: 500; margin-bottom: 6px;">Bracket data</div>
+<div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px; padding: 5px 0; border-bottom: 0.5px solid var(--border);"><div><div>Federal 2026</div><div style="font-size: 10px; color: var(--text-muted);">Verified 2026-01-14</div></div><span style="font-size: 10px; background: var(--bg-success); color: var(--text-success); padding: 2px 7px; border-radius: var(--radius);">Current</span></div>
+<div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px; padding: 5px 0; border-bottom: 0.5px solid var(--border);"><div><div>Nova Scotia 2026</div><div style="font-size: 10px; color: var(--text-muted);">Verified 2026-01-14</div></div><span style="font-size: 10px; background: var(--bg-success); color: var(--text-success); padding: 2px 7px; border-radius: var(--radius);">Current</span></div>
+<div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px; padding: 5px 0;"><div><div>CPP / EI 2026</div><div style="font-size: 10px; color: var(--text-muted);">Verified 2026-01-14</div></div><span style="font-size: 10px; background: var(--bg-success); color: var(--text-success); padding: 2px 7px; border-radius: var(--radius);">Current</span></div>
+<button style="font-size: 11px; height: 26px; width: 100%; margin-top: 8px;">Update from CRA</button>
+</div>
+</div>
+
+<div style="background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 12px; padding: 12px;">
+<div style="display: grid; grid-template-columns: 118px 1fr; gap: 8px; align-items: center; margin-bottom: 10px;"><label style="font-size: 11px; color: var(--text-secondary);">Vehicle business use</label><div style="display: flex; gap: 8px; align-items: center;"><input type="text" value="68" style="font-size: 11px; height: 28px; width: 56px;" readonly><span style="font-size: 11px; color: var(--text-secondary);">%</span></div></div>
+<div style="background: var(--bg-warning); border-radius: var(--radius); padding: 9px 10px; margin-bottom: 12px;"><div style="font-size: 10px; line-height: 1.6;">CRA expects this backed by a mileage log. It's among the most reviewed deductions, and reconstructing a log later is difficult.</div></div>
+
+<div style="border-top: 0.5px solid var(--border); padding-top: 10px; margin-bottom: 10px;">
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;"><span style="font-size: 11px; font-weight: 500;">Odometer log</span><span style="font-size: 10px; color: var(--text-muted);">Optional &middot; manual</span></div>
+<div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; font-size: 10px; color: var(--text-muted); margin-bottom: 3px;"><span>Period</span><span>Business km</span><span>Total km</span></div>
+<div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-bottom: 5px;"><input type="text" value="Jul 2026" style="font-size: 11px; height: 26px;" readonly><input type="text" value="1,842" style="font-size: 11px; height: 26px;" readonly><input type="text" value="2,710" style="font-size: 11px; height: 26px;" readonly></div>
+<div style="font-size: 10px; color: var(--text-secondary);">Computes to 68.0% &mdash; matches your setting.</div>
+</div>
+
+<div style="border-top: 0.5px solid var(--border); padding-top: 10px;">
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;"><span style="font-size: 11px; font-weight: 500;">Capital cost allowance</span><span style="font-size: 10px; color: var(--text-muted);">Manual entry only</span></div>
+<div style="display: grid; grid-template-columns: 1fr 78px; gap: 6px; margin-bottom: 5px;"><input type="text" value="2019 Corolla — class 10.1" style="font-size: 11px; height: 26px;" readonly><input type="text" value="$0.00" style="font-size: 11px; height: 26px;" readonly></div>
+<div style="font-size: 10px; color: var(--text-muted);">The app records what you enter. It doesn't compute CCA &mdash; that needs prior-year UCC balances from tax software.</div>
+</div>
+</div>
+</div>
+
+<div class="screen-label">HST, warranties &amp; subscriptions</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px;">
+
+<div style="background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 12px; padding: 12px;">
+<div style="background: var(--bg-warning); border-radius: var(--radius); padding: 9px 10px; margin-bottom: 12px;"><div style="font-size: 11px; font-weight: 500;">Registration required from dollar one</div><div style="font-size: 10px; margin-top: 2px; opacity: 0.85;">The $30,000 small-supplier exemption doesn't apply to rideshare.</div></div>
+<div style="display: grid; grid-template-columns: 118px 1fr; gap: 8px; align-items: center; margin-bottom: 10px;"><label style="font-size: 11px; color: var(--text-secondary);">Filing frequency</label><select style="font-size: 11px; height: 28px;"><option>Annual</option><option>Quarterly</option><option>Monthly</option></select></div>
+<div style="font-size: 11px; font-weight: 500; margin-bottom: 6px;">Period Jan 1 &ndash; Dec 31, 2026</div>
+<div style="display: flex; justify-content: space-between; font-size: 11px; padding: 4px 0; border-bottom: 0.5px solid var(--border);"><span style="color: var(--text-secondary);">Collected on fares</span><span>$1,092.30</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 11px; padding: 4px 0; border-bottom: 0.5px solid var(--border);"><span style="color: var(--text-secondary);">&minus; Input tax credits</span><span>&minus;$284.15</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 12px; padding: 5px 0; font-weight: 500;"><span>Net remittance</span><span>$808.15</span></div>
+<div style="font-size: 10px; color: var(--text-muted); margin-top: 2px;">ITCs apportioned at 68% business use. Due date derives from period end &mdash; verify against CRA.</div>
+<div style="background: var(--surface-1); border-radius: var(--radius); padding: 9px; margin-top: 10px;"><div style="font-size: 10px; color: var(--text-muted);">Held in its own reserve bucket</div><div style="font-size: 15px; font-weight: 500;">$808.15</div><div style="font-size: 10px; color: var(--text-secondary);">Separate from the income tax reserve &mdash; different deadline.</div></div>
+</div>
+
+<div style="background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 12px; padding: 12px;">
+<div style="font-size: 11px; font-weight: 500; margin-bottom: 6px;">Deadlines approaching</div>
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 6px; border-bottom: 0.5px solid var(--border); background: var(--bg-danger);"><div><div style="font-size: 11px;">Bluetooth headphones</div><div style="font-size: 10px; opacity: 0.85;">Best Buy &middot; return closes Jul 26</div></div><button style="font-size: 10px; height: 24px;">Receipt</button></div>
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 0.5px solid var(--border);"><div><div style="font-size: 11px;">Winter tires</div><div style="font-size: 10px; color: var(--text-muted);">Kal Tire &middot; warranty to Nov 2028</div></div><button style="font-size: 10px; height: 24px;">Receipt</button></div>
+
+<div style="font-size: 11px; font-weight: 500; margin: 12px 0 6px;">Detected subscriptions</div>
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 0.5px solid var(--border);"><div><div style="font-size: 11px;">Spotify</div><div style="font-size: 10px; color: var(--text-muted);">$12.99/mo</div></div><div style="text-align: right;"><div style="font-size: 11px; font-weight: 500;">$155.88/yr</div><span style="font-size: 9px; color: var(--text-muted);">Active</span></div></div>
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 6px; border-bottom: 0.5px solid var(--border); background: var(--bg-warning);"><div><div style="font-size: 11px;">Cloud storage</div><div style="font-size: 10px; opacity: 0.85;">Rose $9.99 &rarr; $14.99</div></div><div style="text-align: right;"><div style="font-size: 11px; font-weight: 500;">$179.88/yr</div><span style="font-size: 9px; opacity: 0.85;">+$60/yr</span></div></div>
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 0;"><div><div style="font-size: 11px;">Gym membership</div><div style="font-size: 10px; color: var(--text-muted);">Detected &middot; 3 charges</div></div><div style="display: flex; gap: 4px;"><button style="font-size: 10px; height: 24px;">Confirm</button><button style="font-size: 10px; height: 24px;">Dismiss</button></div></div>
+</div>
+</div>
+
+<div class="screen-label">Onboarding — first run</div>
+<div style="background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 12px; padding: 16px;">
+<div style="display: flex; gap: 5px; margin-bottom: 16px;">
+<div style="flex: 1; height: 3px; background: var(--fill-accent); border-radius: 2px;"></div>
+<div style="flex: 1; height: 3px; background: var(--fill-accent); border-radius: 2px;"></div>
+<div style="flex: 1; height: 3px; background: var(--fill-accent); border-radius: 2px;"></div>
+<div style="flex: 1; height: 3px; background: var(--surface-1); border-radius: 2px;"></div>
+<div style="flex: 1; height: 3px; background: var(--surface-1); border-radius: 2px;"></div>
+</div>
+
+<div style="max-width: 440px;">
+<div style="font-size: 10px; color: var(--text-muted); margin-bottom: 3px;">Step 3 of 5</div>
+<div style="font-size: 16px; font-weight: 500; margin-bottom: 4px;">Do you have self-employment income?</div>
+<div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 14px;">Uber, freelance, contract work &mdash; anything where tax isn't withheld before you're paid.</div>
+
+<div style="border: 2px solid var(--border-accent); border-radius: var(--radius); padding: 11px; margin-bottom: 8px;">
+<div style="display: flex; align-items: center; gap: 9px;"><div style="width: 13px; height: 13px; border-radius: 50%; border: 4px solid var(--fill-accent); flex-shrink: 0;"></div><div><div style="font-size: 12px;">Yes &mdash; I drive for Uber</div><div style="font-size: 10px; color: var(--text-secondary); margin-top: 1px;">We'll set up a tax reserve so the money's there at filing.</div></div></div>
+</div>
+<div style="border: 0.5px solid var(--border); border-radius: var(--radius); padding: 11px; margin-bottom: 8px;">
+<div style="display: flex; align-items: center; gap: 9px;"><div style="width: 13px; height: 13px; border-radius: 50%; border: 0.5px solid var(--border-strong); flex-shrink: 0;"></div><div><div style="font-size: 12px;">Yes &mdash; other self-employment</div><div style="font-size: 10px; color: var(--text-secondary); margin-top: 1px;">Freelance, contract, or a side business.</div></div></div>
+</div>
+<div style="border: 0.5px solid var(--border); border-radius: var(--radius); padding: 11px; margin-bottom: 14px;">
+<div style="display: flex; align-items: center; gap: 9px;"><div style="width: 13px; height: 13px; border-radius: 50%; border: 0.5px solid var(--border-strong); flex-shrink: 0;"></div><div><div style="font-size: 12px;">No &mdash; employment income only</div><div style="font-size: 10px; color: var(--text-secondary); margin-top: 1px;">Tax is already withheld on your pay stubs.</div></div></div>
+</div>
+
+<div style="background: var(--bg-warning); border-radius: var(--radius); padding: 10px; margin-bottom: 14px;">
+<div style="font-size: 11px; font-weight: 500;">Two things about Uber in Nova Scotia</div>
+<div style="font-size: 10px; margin-top: 3px; line-height: 1.6; opacity: 0.85;">Rideshare requires HST registration from your first fare &mdash; the $30,000 exemption doesn't apply. And you'll pay both halves of CPP, roughly double what employment costs.</div>
+</div>
+
+<div style="display: flex; gap: 8px;"><button style="font-size: 12px; height: 32px;">Back</button><button style="font-size: 12px; height: 32px;">Continue</button></div>
+</div>
+</div>
+
+</div>
+</body>
+</html>

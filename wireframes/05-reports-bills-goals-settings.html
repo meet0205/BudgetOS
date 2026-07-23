@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reports, bills, goals &amp; AI settings — Budget App Wireframes</title>
+<link rel="stylesheet" href="wireframe.css">
+</head>
+<body>
+<div class="page">
+<div class="page-header">
+<h1>Reports, bills, goals &amp; AI settings</h1>
+<p>Monthly report with year-over-year comparison, recurring bills with creep detection, savings goals with the trade-off slider, and the AI enhancement settings pane.</p>
+</div>
+<div class="page-nav">
+<a href="index.html">Index</a>
+<a href="01-shell-dashboard.html">Shell &amp; dashboard</a><a href="02-import-review.html">Import &amp; review</a><a href="03-income-tax.html">Income &amp; tax</a><a href="04-ledger-allocation-explore.html">Ledger, allocation, explore</a><a href="05-reports-bills-goals-settings.html">Reports, bills, goals, settings</a><a href="06-settings-hst-onboarding.html">Settings, HST, onboarding</a>
+</div>
+<div class="screen-label">Reports — monthly with year-over-year</div>
+<div style="background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 12px; padding: 14px;">
+<div style="display: flex; gap: 8px; align-items: center; margin-bottom: 12px;">
+<div style="display: flex; gap: 2px; background: var(--surface-1); border-radius: var(--radius); padding: 2px;">
+<span style="font-size: 11px; padding: 3px 10px; background: var(--surface-2); border-radius: 6px;">Monthly</span>
+<span style="font-size: 11px; padding: 3px 10px; color: var(--text-secondary);">YTD</span>
+<span style="font-size: 11px; padding: 3px 10px; color: var(--text-secondary);">Year over year</span>
+<span style="font-size: 11px; padding: 3px 10px; color: var(--text-secondary);">Heatmap</span>
+</div>
+<div style="margin-left: auto; display: flex; gap: 6px;"><button style="font-size: 11px; height: 26px;">CSV</button><button style="font-size: 11px; height: 26px;">PDF</button></div>
+</div>
+
+<div style="display: grid; grid-template-columns: minmax(0, 1fr) 230px; gap: 14px;">
+<svg viewBox="0 0 400 150" style="width: 100%; height: 148px;">
+<line x1="34" y1="10" x2="34" y2="122" stroke="rgba(128,128,128,0.3)" stroke-width="0.5"/>
+<line x1="34" y1="122" x2="394" y2="122" stroke="rgba(128,128,128,0.3)" stroke-width="0.5"/>
+<text x="4" y="14" font-size="8" fill="#888780">$700</text><text x="4" y="70" font-size="8" fill="#888780">$350</text><text x="12" y="125" font-size="8" fill="#888780">$0</text>
+<rect x="48" y="28" width="22" height="94" fill="#7F77DD" rx="2"/><rect x="72" y="52" width="22" height="70" fill="#CECBF6" rx="2"/>
+<rect x="110" y="54" width="22" height="68" fill="#7F77DD" rx="2"/><rect x="134" y="66" width="22" height="56" fill="#CECBF6" rx="2"/>
+<rect x="172" y="65" width="22" height="57" fill="#7F77DD" rx="2"/><rect x="196" y="78" width="22" height="44" fill="#CECBF6" rx="2"/>
+<rect x="234" y="84" width="22" height="38" fill="#7F77DD" rx="2"/><rect x="258" y="90" width="22" height="32" fill="#CECBF6" rx="2"/>
+<rect x="296" y="96" width="22" height="26" fill="#7F77DD" rx="2"/><rect x="320" y="99" width="22" height="23" fill="#CECBF6" rx="2"/>
+<text x="52" y="134" font-size="8" fill="#888780">Groceries</text><text x="118" y="134" font-size="8" fill="#888780">Vehicle</text><text x="184" y="134" font-size="8" fill="#888780">Dining</text><text x="240" y="134" font-size="8" fill="#888780">Household</text><text x="306" y="134" font-size="8" fill="#888780">Other</text>
+<rect x="48" y="142" width="8" height="6" fill="#7F77DD" rx="1"/><text x="60" y="148" font-size="8" fill="#888780">Jul 2026</text>
+<rect x="106" y="142" width="8" height="6" fill="#CECBF6" rx="1"/><text x="118" y="148" font-size="8" fill="#888780">Jul 2025</text>
+</svg>
+
+<div>
+<div style="font-size: 11px; font-weight: 500; margin-bottom: 6px;">Summary</div>
+<div style="display: flex; justify-content: space-between; font-size: 11px; padding: 4px 0; border-bottom: 0.5px solid var(--border);"><span style="color: var(--text-secondary);">Income</span><span>$3,290</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 11px; padding: 4px 0; border-bottom: 0.5px solid var(--border);"><span style="color: var(--text-secondary);">Spend</span><span>$1,847</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 11px; padding: 4px 0; border-bottom: 0.5px solid var(--border);"><span style="color: var(--text-secondary);">Allocated</span><span>$2,339</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 11px; padding: 4px 0; border-bottom: 0.5px solid var(--border);"><span style="color: var(--text-secondary);">Tax reserved</span><span>$211</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 12px; padding: 5px 0; font-weight: 500;"><span>Net</span><span>$1,443</span></div>
+<div style="background: var(--surface-1); border-radius: var(--radius); padding: 9px; margin-top: 10px;">
+<div style="font-size: 10px; color: var(--text-muted);">vs July 2025</div>
+<div style="font-size: 11px; color: var(--text-danger); margin-top: 2px;">Spend up 14% &middot; $226 more</div>
+<div style="font-size: 10px; color: var(--text-secondary); margin-top: 3px;">Mostly dining and fuel</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="screen-label">Bills and goals</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px;">
+
+<div style="background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 12px; padding: 12px;">
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;"><span style="font-size: 12px; font-weight: 500;">Next 30 days</span><button style="font-size: 11px; height: 26px;">+ Add bill</button></div>
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 0.5px solid var(--border);"><div><div style="font-size: 11px;">Rent</div><div style="font-size: 10px; color: var(--text-muted);">Aug 1 &middot; monthly</div></div><div style="text-align: right;"><div style="font-size: 11px; font-weight: 500;">$1,450</div><span style="font-size: 9px; color: var(--text-muted);">Upcoming</span></div></div>
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 7px 6px; border-bottom: 0.5px solid var(--border); background: var(--bg-warning);"><div><div style="font-size: 11px;">Hydro</div><div style="font-size: 10px; opacity: 0.8;">Aug 4 &middot; up from $71</div></div><div style="text-align: right;"><div style="font-size: 11px; font-weight: 500;">$88</div><span style="font-size: 9px; opacity: 0.8;">+24%</span></div></div>
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 0.5px solid var(--border);"><div><div style="font-size: 11px;">Phone</div><div style="font-size: 10px; color: var(--text-muted);">Aug 6 &middot; monthly</div></div><div style="text-align: right;"><div style="font-size: 11px; font-weight: 500;">$65</div><span style="font-size: 9px; color: var(--text-muted);">Upcoming</span></div></div>
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 7px 0;"><div><div style="font-size: 11px;">Car insurance</div><div style="font-size: 10px; color: var(--text-muted);">Aug 12 &middot; monthly</div></div><div style="text-align: right;"><div style="font-size: 11px; font-weight: 500;">$142</div><span style="font-size: 9px; color: var(--text-muted);">Upcoming</span></div></div>
+<div style="background: var(--surface-1); border-radius: var(--radius); padding: 8px; margin-top: 10px; font-size: 10px; color: var(--text-secondary);">Matched Jul 4 hydro payment to its instance automatically &mdash; amount within tolerance.</div>
+</div>
+
+<div style="background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 12px; padding: 12px;">
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;"><span style="font-size: 12px; font-weight: 500;">Active goals</span><button style="font-size: 11px; height: 26px;">+ Add goal</button></div>
+<div style="border-bottom: 0.5px solid var(--border); padding-bottom: 10px; margin-bottom: 10px;">
+<div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><span style="font-size: 11px;">Used car</span><span style="font-size: 11px; font-weight: 500;">$4,200 / $9,000</span></div>
+<div style="height: 6px; background: var(--surface-1); border-radius: 3px; overflow: hidden; margin-bottom: 4px;"><div style="width: 47%; height: 100%; background: var(--fill-accent);"></div></div>
+<div style="display: flex; justify-content: space-between; font-size: 10px; color: var(--text-secondary);"><span>$250 / month</span><span style="color: var(--text-danger);">Mar 2028 &middot; slipped 1 mo</span></div>
+</div>
+<div style="border-bottom: 0.5px solid var(--border); padding-bottom: 10px; margin-bottom: 10px;">
+<div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><span style="font-size: 11px;">Emergency fund</span><span style="font-size: 11px; font-weight: 500;">$3,290 / $6,000</span></div>
+<div style="height: 6px; background: var(--surface-1); border-radius: 3px; overflow: hidden; margin-bottom: 4px;"><div style="width: 55%; height: 100%; background: var(--fill-success);"></div></div>
+<div style="display: flex; justify-content: space-between; font-size: 10px; color: var(--text-secondary);"><span>10% of income</span><span>Nov 2027 &middot; on track</span></div>
+</div>
+<div style="background: var(--bg-accent); border-radius: var(--radius); padding: 9px 10px;">
+<div style="font-size: 11px; font-weight: 500;">Trade-off</div>
+<div style="font-size: 10px; margin: 4px 0 6px; opacity: 0.85;">Cut dining by $90/mo &rarr; car goal reaches Nov 2027, 4 months sooner.</div>
+<input type="range" min="180" max="360" value="266" style="width: 100%;">
+<div style="display: flex; justify-content: space-between; font-size: 9px; opacity: 0.8;"><span>$180 lowest month</span><span>$360 highest</span></div>
+</div>
+</div>
+</div>
+
+<div class="screen-label">Settings — AI enhancement</div>
+<div style="background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 12px; overflow: hidden;">
+<div style="display: grid; grid-template-columns: 132px minmax(0, 1fr);">
+<div style="border-right: 0.5px solid var(--border); background: var(--surface-1); padding: 8px 6px;">
+<div style="font-size: 11px; padding: 5px 8px; background: var(--surface-2); border-radius: var(--radius); margin-bottom: 1px;">AI enhancement</div>
+<div style="font-size: 11px; padding: 5px 8px; color: var(--text-secondary); margin-bottom: 1px;">Tax &amp; province</div>
+<div style="font-size: 11px; padding: 5px 8px; color: var(--text-secondary); margin-bottom: 1px;">Business use</div>
+<div style="font-size: 11px; padding: 5px 8px; color: var(--text-secondary); margin-bottom: 1px;">Accounts</div>
+<div style="font-size: 11px; padding: 5px 8px; color: var(--text-secondary); margin-bottom: 1px;">Categories</div>
+<div style="font-size: 11px; padding: 5px 8px; color: var(--text-secondary); margin-bottom: 1px;">Rules</div>
+<div style="font-size: 11px; padding: 5px 8px; color: var(--text-secondary); margin-bottom: 1px;">Privacy &amp; data</div>
+<div style="font-size: 11px; padding: 5px 8px; color: var(--text-secondary);">About</div>
+</div>
+
+<div style="padding: 14px;">
+<div style="display: flex; gap: 2px; background: var(--surface-1); border-radius: var(--radius); padding: 2px; width: fit-content; margin-bottom: 12px;">
+<span style="font-size: 11px; padding: 4px 12px; background: var(--surface-2); border-radius: 6px;">App subscription</span>
+<span style="font-size: 11px; padding: 4px 12px; color: var(--text-secondary);">My own key</span>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-bottom: 12px;">
+<div style="border: 0.5px solid var(--border); border-radius: var(--radius); padding: 11px;">
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;"><span style="font-size: 11px; font-weight: 500;">Account</span><span style="font-size: 10px; background: var(--bg-success); color: var(--text-success); padding: 2px 7px; border-radius: var(--radius);">Connected</span></div>
+<div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 7px;">Plus &middot; $6.99/mo</div>
+<div style="height: 5px; background: var(--surface-1); border-radius: 3px; overflow: hidden; margin-bottom: 3px;"><div style="width: 34%; height: 100%; background: var(--fill-accent);"></div></div>
+<div style="font-size: 10px; color: var(--text-muted); margin-bottom: 9px;">68 of 200 &middot; resets Aug 1</div>
+<div style="display: flex; gap: 5px;"><button style="font-size: 10px; height: 26px; flex: 1;">Switch profile</button><button style="font-size: 10px; height: 26px; flex: 1;">Disconnect</button></div>
+</div>
+<div style="border: 0.5px solid var(--border); border-radius: var(--radius); padding: 11px;">
+<div style="font-size: 11px; font-weight: 500; margin-bottom: 6px;">When to enhance</div>
+<div style="display: flex; align-items: center; gap: 7px; padding: 3px 0;"><div style="width: 12px; height: 12px; border-radius: 50%; border: 0.5px solid var(--border-strong);"></div><span style="font-size: 11px;">Every receipt</span></div>
+<div style="display: flex; align-items: center; gap: 7px; padding: 3px 0;"><div style="width: 12px; height: 12px; border-radius: 50%; border: 4px solid var(--fill-accent);"></div><span style="font-size: 11px;">Only low confidence</span></div>
+<div style="display: flex; align-items: center; gap: 7px; padding: 3px 0;"><div style="width: 12px; height: 12px; border-radius: 50%; border: 0.5px solid var(--border-strong);"></div><span style="font-size: 11px;">Manual only</span></div>
+<div style="display: flex; align-items: center; gap: 7px; padding: 3px 0;"><div style="width: 12px; height: 12px; border-radius: 50%; border: 0.5px solid var(--border-strong);"></div><span style="font-size: 11px;">Off</span></div>
+</div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px;">
+<div style="border: 0.5px solid var(--border); border-radius: var(--radius); padding: 11px;">
+<div style="font-size: 11px; font-weight: 500; margin-bottom: 6px;">Send receipt image</div>
+<div style="display: flex; align-items: center; gap: 7px; padding: 3px 0;"><div style="width: 12px; height: 12px; border-radius: 50%; border: 4px solid var(--fill-accent);"></div><span style="font-size: 11px;">Never &mdash; text only</span></div>
+<div style="display: flex; align-items: center; gap: 7px; padding: 3px 0;"><div style="width: 12px; height: 12px; border-radius: 50%; border: 0.5px solid var(--border-strong);"></div><span style="font-size: 11px;">Only when OCR fails</span></div>
+<div style="display: flex; align-items: center; gap: 7px; padding: 3px 0;"><div style="width: 12px; height: 12px; border-radius: 50%; border: 0.5px solid var(--border-strong);"></div><span style="font-size: 11px;">Always</span> <span style="font-size: 9px; color: var(--text-danger);">~15&times; cost</span></div>
+<div style="font-size: 10px; color: var(--text-muted); margin-top: 7px; border-top: 0.5px solid var(--border); padding-top: 7px;">Card numbers, phone, and address are always removed before sending.</div>
+</div>
+<div style="border: 0.5px solid var(--border); border-radius: var(--radius); padding: 11px;">
+<div style="font-size: 11px; font-weight: 500; margin-bottom: 6px;">Spending guard</div>
+<div style="font-size: 10px; color: var(--text-secondary); margin-bottom: 3px;">Monthly ceiling</div>
+<input type="text" value="$15.00" style="font-size: 11px; height: 28px; width: 100%; margin-bottom: 8px;" readonly>
+<div style="display: flex; justify-content: space-between; font-size: 10px; margin-bottom: 3px;"><span style="color: var(--text-secondary);">Used</span><span style="font-weight: 500;">$4.82</span></div>
+<div style="height: 5px; background: var(--surface-1); border-radius: 3px; overflow: hidden;"><div style="width: 32%; height: 100%; background: var(--fill-success);"></div></div>
+<div style="font-size: 10px; color: var(--text-muted); margin-top: 7px;">Pauses at the ceiling. Local parsing keeps working.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ledger, allocation &amp; explore — Budget App Wireframes</title>
+<link rel="stylesheet" href="wireframe.css">
+</head>
+<body>
+<div class="page">
+<div class="page-header">
+<h1>Ledger, allocation &amp; explore</h1>
+<p>Transaction ledger with inline split expansion, allocation buckets in funding order with the locked tax reserve, and the item-level explore filter.</p>
+</div>
+<div class="page-nav">
+<a href="index.html">Index</a>
+<a href="01-shell-dashboard.html">Shell &amp; dashboard</a><a href="02-import-review.html">Import &amp; review</a><a href="03-income-tax.html">Income &amp; tax</a><a href="04-ledger-allocation-explore.html">Ledger, allocation, explore</a><a href="05-reports-bills-goals-settings.html">Reports, bills, goals, settings</a><a href="06-settings-hst-onboarding.html">Settings, HST, onboarding</a>
+</div>
+<div class="screen-label">Transactions — ledger</div>
+<div style="background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 12px; padding: 14px;">
+
+<div style="display: flex; gap: 8px; align-items: center; margin-bottom: 12px;">
+<input type="text" placeholder="Search merchant, note, or amount" style="font-size: 11px; height: 28px; flex: 1;">
+<select style="font-size: 11px; height: 28px; width: 100px;"><option>All accounts</option></select>
+<select style="font-size: 11px; height: 28px; width: 100px;"><option>July 2026</option></select>
+<button style="font-size: 11px; height: 28px;">+ Add</button>
+</div>
+
+<div style="border: 0.5px solid var(--border); border-radius: var(--radius); overflow: hidden;">
+<div style="display: grid; grid-template-columns: 74px 1fr 118px 92px 74px 26px; gap: 8px; padding: 7px 10px; background: var(--surface-1); font-size: 10px; color: var(--text-muted);"><span>Date</span><span>Merchant</span><span>Category</span><span>Account</span><span style="text-align:right;">Amount</span><span></span></div>
+
+<div style="display: grid; grid-template-columns: 74px 1fr 118px 92px 74px 26px; gap: 8px; padding: 8px 10px; border-top: 0.5px solid var(--border); font-size: 11px; align-items: center;"><span style="color: var(--text-secondary);">Jul 19</span><span>Petro-Canada</span><span style="font-size: 10px; background: var(--bg-accent); color: var(--text-accent); padding: 2px 6px; border-radius: var(--radius); width: fit-content;">Vehicle &rsaquo; Fuel</span><span style="color: var(--text-secondary);">Visa 4419</span><span style="text-align: right;">$46.85</span><span style="font-size: 10px; color: var(--text-accent);">B</span></div>
+
+<div style="display: grid; grid-template-columns: 74px 1fr 118px 92px 74px 26px; gap: 8px; padding: 8px 10px; border-top: 0.5px solid var(--border); font-size: 11px; align-items: center;"><span style="color: var(--text-secondary);">Jul 18</span><span>Walmart <span style="font-size: 10px; color: var(--text-muted);">&middot; 14 items</span></span><span style="font-size: 10px; color: var(--text-muted);">Split &times;4</span><span style="color: var(--text-secondary);">Visa 4419</span><span style="text-align: right;">$84.22</span><span style="font-size: 10px; color: var(--text-muted);">&#9662;</span></div>
+<div style="display: grid; grid-template-columns: 74px 1fr 118px 92px 74px 26px; gap: 8px; padding: 6px 10px 6px 28px; border-top: 0.5px solid var(--border); font-size: 10px; background: var(--surface-1);"><span></span><span style="color: var(--text-secondary);">Dairy &amp; eggs</span><span></span><span></span><span style="text-align: right; color: var(--text-secondary);">$18.40</span><span></span></div>
+<div style="display: grid; grid-template-columns: 74px 1fr 118px 92px 74px 26px; gap: 8px; padding: 6px 10px 6px 28px; border-top: 0.5px solid var(--border); font-size: 10px; background: var(--surface-1);"><span></span><span style="color: var(--text-secondary);">Produce</span><span></span><span></span><span style="text-align: right; color: var(--text-secondary);">$22.15</span><span></span></div>
+<div style="display: grid; grid-template-columns: 74px 1fr 118px 92px 74px 26px; gap: 8px; padding: 6px 10px 6px 28px; border-top: 0.5px solid var(--border); font-size: 10px; background: var(--surface-1);"><span></span><span style="color: var(--text-secondary);">Household</span><span></span><span></span><span style="text-align: right; color: var(--text-secondary);">$31.02</span><span></span></div>
+<div style="display: grid; grid-template-columns: 74px 1fr 118px 92px 74px 26px; gap: 8px; padding: 6px 10px 6px 28px; border-top: 0.5px solid var(--border); font-size: 10px; background: var(--surface-1);"><span></span><span style="color: var(--text-secondary);">Snacks</span><span></span><span></span><span style="text-align: right; color: var(--text-secondary);">$12.65</span><span></span></div>
+
+<div style="display: grid; grid-template-columns: 74px 1fr 118px 92px 74px 26px; gap: 8px; padding: 8px 10px; border-top: 0.5px solid var(--border); font-size: 11px; align-items: center;"><span style="color: var(--text-secondary);">Jul 17</span><span>Transfer &rarr; Savings</span><span style="font-size: 10px; color: var(--text-muted);">Not spending</span><span style="color: var(--text-secondary);">Chequing</span><span style="text-align: right; color: var(--text-muted);">$400.00</span><span style="font-size: 10px; color: var(--text-muted);">&#8646;</span></div>
+
+<div style="display: grid; grid-template-columns: 74px 1fr 118px 92px 74px 26px; gap: 8px; padding: 8px 10px; border-top: 0.5px solid var(--border); font-size: 11px; align-items: center;"><span style="color: var(--text-secondary);">Jul 16</span><span>Gap <span style="font-size: 10px; color: var(--text-muted);">&middot; refund</span></span><span style="font-size: 10px; background: var(--bg-accent); color: var(--text-accent); padding: 2px 6px; border-radius: var(--radius); width: fit-content;">Clothing</span><span style="color: var(--text-secondary);">Visa 4419</span><span style="text-align: right; color: var(--text-success);">&minus;$27.99</span><span style="font-size: 10px; color: var(--text-success);">&#8617;</span></div>
+
+<div style="display: grid; grid-template-columns: 74px 1fr 118px 92px 74px 26px; gap: 8px; padding: 8px 10px; border-top: 0.5px solid var(--border); font-size: 11px; align-items: center;"><span style="color: var(--text-secondary);">Jul 15</span><span>The Bicycle Thief</span><span style="font-size: 10px; background: var(--bg-accent); color: var(--text-accent); padding: 2px 6px; border-radius: var(--radius); width: fit-content;">Dining</span><span style="color: var(--text-secondary);">Visa 4419</span><span style="text-align: right;">$88.40</span><span></span></div>
+</div>
+
+<div style="display: flex; justify-content: space-between; font-size: 10px; color: var(--text-muted); margin-top: 8px;"><span>142 transactions &middot; transfers and refunds excluded from spend</span><span>Spend total $1,847.22</span></div>
+</div>
+
+<div class="screen-label">Allocation — buckets and safe-to-spend</div>
+<div style="background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 12px; padding: 14px;">
+<div style="display: grid; grid-template-columns: minmax(0, 1fr) 200px; gap: 16px;">
+
+<div>
+<div style="font-size: 12px; font-weight: 500; margin-bottom: 8px;">Funding order</div>
+<div style="border: 0.5px solid var(--border); border-radius: var(--radius); overflow: hidden;">
+<div style="display: grid; grid-template-columns: 20px 1fr 88px 92px 60px; gap: 8px; padding: 7px 10px; background: var(--surface-1); font-size: 10px; color: var(--text-muted);"><span></span><span>Bucket</span><span>Mode</span><span>Funded</span><span style="text-align:right;">Target</span></div>
+<div style="display: grid; grid-template-columns: 20px 1fr 88px 92px 60px; gap: 8px; padding: 8px 10px; border-top: 0.5px solid var(--border); font-size: 11px; align-items: center;"><span style="color: var(--text-muted);">&#8942;</span><span>Rent</span><span style="font-size: 10px; color: var(--text-secondary);">Fixed</span><div style="height: 5px; background: var(--surface-1); border-radius: 3px;"><div style="width: 100%; height: 100%; background: var(--fill-success); border-radius: 3px;"></div></div><span style="text-align: right;">$1,450</span></div>
+<div style="display: grid; grid-template-columns: 20px 1fr 88px 92px 60px; gap: 8px; padding: 8px 10px; border-top: 0.5px solid var(--border); font-size: 11px; align-items: center;"><span style="color: var(--text-muted);">&#8942;</span><span>Bills</span><span style="font-size: 10px; color: var(--text-secondary);">Fixed</span><div style="height: 5px; background: var(--surface-1); border-radius: 3px;"><div style="width: 100%; height: 100%; background: var(--fill-success); border-radius: 3px;"></div></div><span style="text-align: right;">$310</span></div>
+<div style="display: grid; grid-template-columns: 20px 1fr 88px 92px 60px; gap: 8px; padding: 8px 10px; border-top: 0.5px solid var(--border); font-size: 11px; align-items: center; background: var(--bg-warning);"><span>&#128274;</span><span>Tax reserve <span style="font-size: 9px; border: 0.5px solid var(--border-warning); padding: 1px 5px; border-radius: 8px;">System</span></span><span style="font-size: 10px;">From estimate</span><div style="height: 5px; background: rgba(0,0,0,0.1); border-radius: 3px;"><div style="width: 77%; height: 100%; background: #EF9F27; border-radius: 3px;"></div></div><span style="text-align: right;">$211</span></div>
+<div style="display: grid; grid-template-columns: 20px 1fr 88px 92px 60px; gap: 8px; padding: 8px 10px; border-top: 0.5px solid var(--border); font-size: 11px; align-items: center;"><span style="color: var(--text-muted);">&#8942;</span><span>Emergency fund</span><span style="font-size: 10px; color: var(--text-secondary);">10% income</span><div style="height: 5px; background: var(--surface-1); border-radius: 3px;"><div style="width: 100%; height: 100%; background: var(--fill-success); border-radius: 3px;"></div></div><span style="text-align: right;">$329</span></div>
+<div style="display: grid; grid-template-columns: 20px 1fr 88px 92px 60px; gap: 8px; padding: 8px 10px; border-top: 0.5px solid var(--border); font-size: 11px; align-items: center;"><span style="color: var(--text-muted);">&#8942;</span><span>Car goal</span><span style="font-size: 10px; color: var(--text-secondary);">Fixed</span><div style="height: 5px; background: var(--surface-1); border-radius: 3px;"><div style="width: 68%; height: 100%; background: var(--fill-warning); border-radius: 3px;"></div></div><span style="text-align: right;">$250</span></div>
+</div>
+<div style="font-size: 10px; color: var(--text-danger); margin-top: 6px;">Car goal underfunded by $80 this period &mdash; target date moves 1 month.</div>
+</div>
+
+<div>
+<div style="background: var(--surface-1); border-radius: var(--radius); padding: 12px; margin-bottom: 10px;">
+<div style="font-size: 10px; color: var(--text-muted);">Income this period</div>
+<div style="font-size: 17px; font-weight: 500;">$3,290</div>
+<div style="border-top: 0.5px solid var(--border); margin: 8px 0; padding-top: 8px;">
+<div style="display: flex; justify-content: space-between; font-size: 10px; padding: 2px 0;"><span style="color: var(--text-secondary);">&minus; Allocated</span><span>$2,339</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 10px; padding: 2px 0;"><span style="color: var(--text-secondary);">&minus; Tax reserve</span><span>$211</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 10px; padding: 2px 0;"><span style="color: var(--text-secondary);">&minus; Spent</span><span>$327</span></div>
+</div>
+<div style="font-size: 10px; color: var(--text-muted);">Safe to spend</div>
+<div style="font-size: 22px; font-weight: 500;">$412.80</div>
+<div style="font-size: 10px; color: var(--text-secondary);">$29.48 / day</div>
+</div>
+<button style="width: 100%; font-size: 11px; height: 28px;">+ Add bucket</button>
+</div>
+</div>
+</div>
+
+<div class="screen-label">Explore — item-level filter</div>
+<div style="background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 12px; padding: 14px;">
+
+<div style="display: flex; gap: 5px; flex-wrap: wrap; align-items: center; margin-bottom: 12px;">
+<span style="font-size: 11px; background: var(--bg-accent); color: var(--text-accent); padding: 4px 10px; border-radius: 12px;">Type: t-shirt &times;</span>
+<span style="font-size: 11px; background: var(--bg-accent); color: var(--text-accent); padding: 4px 10px; border-radius: 12px;">Year: 2026 &times;</span>
+<span style="font-size: 11px; border: 0.5px solid var(--border-strong); padding: 4px 10px; border-radius: 12px; color: var(--text-secondary);">+ Add filter</span>
+<div style="margin-left: auto; display: flex; gap: 6px;"><button style="font-size: 11px; height: 26px;">Save filter</button><button style="font-size: 11px; height: 26px;">Export CSV</button></div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 12px;">
+<div style="background: var(--surface-1); border-radius: var(--radius); padding: 9px;"><div style="font-size: 10px; color: var(--text-muted);">Total</div><div style="font-size: 16px; font-weight: 500;">$186.42</div></div>
+<div style="background: var(--surface-1); border-radius: var(--radius); padding: 9px;"><div style="font-size: 10px; color: var(--text-muted);">Items</div><div style="font-size: 16px; font-weight: 500;">9</div></div>
+<div style="background: var(--surface-1); border-radius: var(--radius); padding: 9px;"><div style="font-size: 10px; color: var(--text-muted);">Avg price</div><div style="font-size: 16px; font-weight: 500;">$20.71</div></div>
+<div style="background: var(--surface-1); border-radius: var(--radius); padding: 9px;"><div style="font-size: 10px; color: var(--text-muted);">Stores</div><div style="font-size: 16px; font-weight: 500;">3</div></div>
+</div>
+
+<div style="display: grid; grid-template-columns: minmax(0, 1fr) 210px; gap: 14px;">
+<div style="border: 0.5px solid var(--border); border-radius: var(--radius); overflow: hidden;">
+<div style="display: grid; grid-template-columns: 66px 1fr 88px 62px; gap: 8px; padding: 7px 10px; background: var(--surface-1); font-size: 10px; color: var(--text-muted);"><span>Date</span><span>Item</span><span>Store</span><span style="text-align:right;">Price</span></div>
+<div style="display: grid; grid-template-columns: 66px 1fr 88px 62px; gap: 8px; padding: 7px 10px; border-top: 0.5px solid var(--border); font-size: 11px;"><span style="color: var(--text-secondary);">Jul 12</span><span>Essential Crew Tee</span><span style="color: var(--text-secondary);">Gap</span><span style="text-align:right;">$27.99</span></div>
+<div style="display: grid; grid-template-columns: 66px 1fr 88px 62px; gap: 8px; padding: 7px 10px; border-top: 0.5px solid var(--border); font-size: 11px;"><span style="color: var(--text-secondary);">Jun 28</span><span>Graphic Tee Navy</span><span style="color: var(--text-secondary);">A&eacute;ropostale</span><span style="text-align:right;">$19.14</span></div>
+<div style="display: grid; grid-template-columns: 66px 1fr 88px 62px; gap: 8px; padding: 7px 10px; border-top: 0.5px solid var(--border); font-size: 11px;"><span style="color: var(--text-secondary);">Jun 03</span><span>Pocket Tee White</span><span style="color: var(--text-secondary);">Winners</span><span style="text-align:right;">$15.50</span></div>
+<div style="display: grid; grid-template-columns: 66px 1fr 88px 62px; gap: 8px; padding: 7px 10px; border-top: 0.5px solid var(--border); font-size: 11px;"><span style="color: var(--text-secondary);">Apr 22</span><span>Essential Crew Tee</span><span style="color: var(--text-secondary);">Gap</span><span style="text-align:right;">$24.50</span></div>
+<div style="display: grid; grid-template-columns: 66px 1fr 88px 62px; gap: 8px; padding: 7px 10px; border-top: 0.5px solid var(--border); font-size: 11px;"><span style="color: var(--text-secondary);">Feb 14</span><span>Basic Tee Grey</span><span style="color: var(--text-secondary);">A&eacute;ropostale</span><span style="text-align:right;">$14.50</span></div>
+</div>
+
+<div>
+<div style="border: 0.5px solid var(--border); border-radius: var(--radius); padding: 10px; margin-bottom: 10px;">
+<div style="font-size: 11px; font-weight: 500; margin-bottom: 6px;">By store</div>
+<div style="display: flex; justify-content: space-between; font-size: 10px; padding: 3px 0;"><span style="color: var(--text-secondary);">Gap</span><span>$98.00</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 10px; padding: 3px 0;"><span style="color: var(--text-secondary);">A&eacute;ropostale</span><span>$57.42</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 10px; padding: 3px 0;"><span style="color: var(--text-secondary);">Winners</span><span>$31.00</span></div>
+</div>
+<div style="border: 0.5px solid var(--border); border-radius: var(--radius); padding: 10px;">
+<div style="font-size: 11px; font-weight: 500; margin-bottom: 6px;">Price over time</div>
+<svg viewBox="0 0 180 48" style="width: 100%; height: 46px;">
+<polyline points="6,36 42,32 78,22 114,26 150,14 174,18" fill="none" stroke="#7F77DD" stroke-width="1.5"/>
+<circle cx="6" cy="36" r="2" fill="#7F77DD"/><circle cx="42" cy="32" r="2" fill="#7F77DD"/><circle cx="78" cy="22" r="2" fill="#7F77DD"/><circle cx="114" cy="26" r="2" fill="#7F77DD"/><circle cx="150" cy="14" r="2" fill="#7F77DD"/><circle cx="174" cy="18" r="2" fill="#7F77DD"/>
+</svg>
+<div style="font-size: 10px; color: var(--text-muted);">$14.50 &rarr; $27.99 since Feb</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</body>
+</html>

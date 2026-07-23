@@ -1,0 +1,127 @@
+{
+  "transaction": [
+    { "slug": "groceries", "display_name": "Groceries" },
+    { "slug": "dining", "display_name": "Dining" },
+    { "slug": "vehicle", "display_name": "Vehicle" },
+    { "slug": "transit", "display_name": "Transit" },
+    { "slug": "housing", "display_name": "Housing" },
+    { "slug": "utilities", "display_name": "Utilities" },
+    { "slug": "telecom", "display_name": "Telecom" },
+    { "slug": "insurance", "display_name": "Insurance" },
+    { "slug": "health", "display_name": "Health" },
+    { "slug": "personal-care", "display_name": "Personal care" },
+    { "slug": "clothing", "display_name": "Clothing" },
+    { "slug": "household", "display_name": "Household" },
+    { "slug": "entertainment", "display_name": "Entertainment" },
+    { "slug": "subscriptions", "display_name": "Subscriptions" },
+    { "slug": "education", "display_name": "Education" },
+    { "slug": "gifts", "display_name": "Gifts" },
+    { "slug": "travel", "display_name": "Travel" },
+    { "slug": "fees", "display_name": "Fees" },
+    { "slug": "business", "display_name": "Business" },
+    { "slug": "other", "display_name": "Other" }
+  ],
+  "product": [
+    {
+      "slug": "p-groceries",
+      "display_name": "Groceries",
+      "children": [
+        { "slug": "p-dairy", "display_name": "Dairy" },
+        { "slug": "p-produce", "display_name": "Produce" },
+        { "slug": "p-meat-seafood", "display_name": "Meat & Seafood" },
+        { "slug": "p-bakery", "display_name": "Bakery" },
+        { "slug": "p-pantry", "display_name": "Pantry" },
+        { "slug": "p-frozen", "display_name": "Frozen" },
+        { "slug": "p-snacks", "display_name": "Snacks" },
+        { "slug": "p-beverages", "display_name": "Beverages" },
+        { "slug": "p-household-supplies", "display_name": "Household supplies" }
+      ]
+    },
+    {
+      "slug": "p-vehicle",
+      "display_name": "Vehicle",
+      "children": [
+        { "slug": "p-fuel", "display_name": "Fuel", "business_expense_kind": "motor_vehicle" },
+        { "slug": "p-maintenance", "display_name": "Maintenance", "business_expense_kind": "motor_vehicle" },
+        { "slug": "p-parking", "display_name": "Parking", "business_expense_kind": "motor_vehicle" },
+        { "slug": "p-tolls", "display_name": "Tolls", "business_expense_kind": "motor_vehicle" },
+        { "slug": "p-registration", "display_name": "Registration", "business_expense_kind": "motor_vehicle" },
+        { "slug": "p-vehicle-insurance", "display_name": "Vehicle insurance", "business_expense_kind": "motor_vehicle" }
+      ]
+    },
+    {
+      "slug": "p-dining",
+      "display_name": "Dining",
+      "children": [
+        { "slug": "p-restaurants", "display_name": "Restaurants", "business_expense_kind": "meals_entertainment" },
+        { "slug": "p-fast-food", "display_name": "Fast food", "business_expense_kind": "meals_entertainment" },
+        { "slug": "p-coffee", "display_name": "Coffee", "business_expense_kind": "meals_entertainment" },
+        { "slug": "p-delivery", "display_name": "Delivery", "business_expense_kind": "meals_entertainment" },
+        { "slug": "p-alcohol", "display_name": "Alcohol" }
+      ]
+    },
+    {
+      "slug": "p-home",
+      "display_name": "Home",
+      "children": [
+        { "slug": "p-furniture", "display_name": "Furniture" },
+        { "slug": "p-appliances", "display_name": "Appliances" },
+        { "slug": "p-tools", "display_name": "Tools", "business_expense_kind": "supplies" },
+        { "slug": "p-decor", "display_name": "Decor" },
+        { "slug": "p-garden", "display_name": "Garden" },
+        { "slug": "p-cleaning", "display_name": "Cleaning supplies" }
+      ]
+    },
+    {
+      "slug": "p-office",
+      "display_name": "Office",
+      "children": [
+        { "slug": "p-office-supplies", "display_name": "Office supplies", "business_expense_kind": "office_supplies" },
+        { "slug": "p-software", "display_name": "Software", "business_expense_kind": "supplies" },
+        { "slug": "p-postage", "display_name": "Postage & shipping", "business_expense_kind": "delivery_freight" }
+      ]
+    },
+    {
+      "slug": "p-health",
+      "display_name": "Health",
+      "children": [
+        { "slug": "p-pharmacy", "display_name": "Pharmacy" },
+        { "slug": "p-dental", "display_name": "Dental" },
+        { "slug": "p-vision", "display_name": "Vision" },
+        { "slug": "p-supplements", "display_name": "Supplements" }
+      ]
+    },
+    {
+      "slug": "p-personal-care",
+      "display_name": "Personal care",
+      "children": [
+        { "slug": "p-toiletries", "display_name": "Toiletries" },
+        { "slug": "p-cosmetics", "display_name": "Cosmetics" },
+        { "slug": "p-haircare", "display_name": "Hair care" }
+      ]
+    },
+    {
+      "slug": "p-clothing",
+      "display_name": "Clothing",
+      "children": [
+        { "slug": "p-apparel", "display_name": "Apparel" },
+        { "slug": "p-footwear", "display_name": "Footwear" },
+        { "slug": "p-accessories", "display_name": "Accessories" }
+      ]
+    },
+    {
+      "slug": "p-tech",
+      "display_name": "Technology",
+      "children": [
+        { "slug": "p-electronics", "display_name": "Electronics" },
+        { "slug": "p-phone", "display_name": "Phone & accessories" },
+        { "slug": "p-subscriptions-digital", "display_name": "Digital subscriptions" }
+      ]
+    },
+    {
+      "slug": "p-other",
+      "display_name": "Other",
+      "children": [{ "slug": "p-uncategorised", "display_name": "Uncategorised" }]
+    }
+  ]
+}
