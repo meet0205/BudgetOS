@@ -89,12 +89,14 @@ export function App() {
   if (error) return <div className="fatal">Failed to start: {error}</div>;
   if (!data) return <div className="loading">Loading BudgetOS…</div>;
 
+  const period = new Date().toLocaleDateString('en-CA', { month: 'long', year: 'numeric' });
+
   return (
     <div className="shell">
       <aside className="sidebar">
         <div className="brand">
-          <span className="brand-mark">₿</span>
-          <span className="brand-name">BudgetOS</span>
+          <div className="brand-name">Budget</div>
+          <div className="brand-period">{period} · {data.profile.province}</div>
         </div>
         <nav>
           {NAV.map((n) => (

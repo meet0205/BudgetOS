@@ -413,9 +413,9 @@ export function Transactions({ data, reload }: { data: BudgetData; reload: () =>
               {data.transactions.map((t) => {
                 const k = t.transaction.kind;
                 const sign = k === 'income' || k === 'refund' ? 'pos' : k === 'transfer' ? '' : 'neg';
-                const catLabel = t.splits.length > 1
-                  ? `${t.splits.length} splits`
-                  : catName(t.splits[0]?.category_id ?? null);
+                const catCell = t.splits.length > 1
+                  ? <span className="muted">Split ×{t.splits.length}</span>
+                  : <span className="chip">{catName(t.splits[0]?.category_id ?? null)}</span>;
                 const acctLabel = k === 'transfer'
                   ? `${acctName(t.transaction.account_id)} → ${acctName(t.transaction.counterparty_account_id)}`
                   : acctName(t.transaction.account_id);
@@ -424,7 +424,7 @@ export function Transactions({ data, reload }: { data: BudgetData; reload: () =>
                     <td className="date">{formatDate(t.transaction.occurred_at)}</td>
                     <td><span className={`pill pill-${k}`}>{k}</span></td>
                     <td>{merchName(t.transaction.merchant_id) || <span className="muted">—</span>}</td>
-                    <td>{k === 'transfer' ? <span className="muted">—</span> : catLabel}</td>
+                    <td>{k === 'transfer' ? <span className="muted">—</span> : catCell}</td>
                     <td className="muted">{acctLabel}</td>
                     <td className={`amount ${sign}`}>{money(t.transaction.total_minor)}</td>
                     <td className="right">
