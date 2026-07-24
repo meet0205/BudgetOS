@@ -9,3 +9,4 @@ export * from './budget/index.js';
 export * from './bills/index.js';
 export * from './goals/index.js';
 export * from './tax/index.js';
+export * from './reports/index.js';
