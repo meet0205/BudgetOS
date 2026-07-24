@@ -315,6 +315,20 @@ tr.archived { opacity: 0.5; }
 .legend-row .swatch { display: inline-block; width: 7px; height: 7px; border-radius: 2px; margin-right: 6px; }
 .legend-row .val { font-weight: 500; font-variant-numeric: tabular-nums; }
 
+/* ---- Placeholder (planned section) ---- */
+.preview-panel {
+  background: var(--surface-2); border: 0.5px dashed var(--border-strong);
+  border-radius: var(--radius-lg); padding: 40px 24px; text-align: center;
+}
+.preview-tag {
+  display: inline-block; font-size: 10px; font-weight: 500;
+  color: var(--text-accent); background: var(--bg-accent);
+  padding: 3px 9px; border-radius: 8px; margin-bottom: 12px;
+}
+.preview-lead { font-size: 14px; font-weight: 500; margin: 0 0 6px; }
+.preview-panel .muted { font-size: 12px; }
+.preview-ref { margin-top: 8px; font-family: var(--font-mono); font-size: 11px; opacity: 0.8; }
+
 /* ---- Tree ---- */
 .tree { list-style: none; margin: 0; padding-left: 0; }
 .tree .tree { padding-left: 16px; border-left: 0.5px solid var(--border); margin-left: 6px; }
