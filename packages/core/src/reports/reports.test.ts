@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { toMinor, minor } from '../money/minor.js';
 import { categoryTotals, priorYearPeriod } from './breakdown.js';
+import { categoryAnomalies } from './insights.js';
 import { toCSV } from './csv.js';
 import type { TransactionWithSplits } from '../db/types.js';
 
@@ -68,5 +69,31 @@ describe('toCSV', () => {
   it('serialises and quotes fields with commas or quotes', () => {
     const csv = toCSV(['Category', 'Total'], [['Groceries', '130.00'], ['Dining, out', '"deluxe"']]);
     expect(csv).toBe('Category,Total\nGroceries,130.00\n"Dining, out","""deluxe"""');
+  });
+});
+
+describe('categoryAnomalies', () => {
+  const spend = (at: string, cat: string, amt: string) =>
+    txn('expense', at, [[cat, amt]]);
+  it('flags a category above its historical average', () => {
+    const txns = [
+      spend('2026-07-10T12:00:00Z', 'dining', '356.00'),  // current
+      spend('2026-06-10T12:00:00Z', 'dining', '260.00'),  // priors avg ~266
+      spend('2026-05-10T12:00:00Z', 'dining', '272.00'),
+    ];
+    const cur = { from: '2026-07-01T00:00:00Z', to: '2026-08-01T00:00:00Z' };
+    const priors = [
+      { from: '2026-06-01T00:00:00Z', to: '2026-07-01T00:00:00Z' },
+      { from: '2026-05-01T00:00:00Z', to: '2026-06-01T00:00:00Z' },
+    ];
+    const a = categoryAnomalies(txns, cur, priors, 25);
+    expect(a).toHaveLength(1);
+    expect(a[0]!.categoryId).toBe('dining');
+    expect(Math.round(a[0]!.deltaPercent)).toBe(34); // 356 vs 266 avg ≈ +34%
+  });
+  it('ignores categories within threshold', () => {
+    const txns = [spend('2026-07-10T12:00:00Z', 'dining', '270.00'), spend('2026-06-10T12:00:00Z', 'dining', '266.00')];
+    const a = categoryAnomalies(txns, { from: '2026-07-01T00:00:00Z', to: '2026-08-01T00:00:00Z' }, [{ from: '2026-06-01T00:00:00Z', to: '2026-07-01T00:00:00Z' }], 25);
+    expect(a).toHaveLength(0);
   });
 });

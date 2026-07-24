@@ -1,4 +1,4 @@
-import { periodSummary, type Minor } from '@budgetos/core';
+import { periodSummary, categoryAnomalies, type Minor } from '@budgetos/core';
 import type { BudgetData, ViewKey } from '../App.js';
 import { money, formatDate } from '../format.js';
 
@@ -39,6 +39,17 @@ function categorySpend(data: BudgetData, from: string, to: string) {
   return { slices, total };
 }
 
+/** N calendar-month ranges immediately before the given month. */
+function priorMonths(now: Date, count: number): { from: string; to: string }[] {
+  const out: { from: string; to: string }[] = [];
+  for (let i = 1; i <= count; i++) {
+    const from = new Date(now.getFullYear(), now.getMonth() - i, 1).toISOString();
+    const to = new Date(now.getFullYear(), now.getMonth() - i + 1, 1).toISOString();
+    out.push({ from, to });
+  }
+  return out;
+}
+
 export function Dashboard({ data, onGo }: { data: BudgetData; onGo: (v: ViewKey) => void }) {
   const { from, to, label } = monthBounds();
   const summary = periodSummary(data.transactions, { from, to });
@@ -46,12 +57,28 @@ export function Dashboard({ data, onGo }: { data: BudgetData; onGo: (v: ViewKey)
   const { slices, total } = categorySpend(data, from, to);
   const activeAccounts = data.accounts.filter((a) => !a.is_archived).length;
 
+  const anomalies = categoryAnomalies(data.transactions, { from, to }, priorMonths(new Date(), 6));
+  const topAnomaly = anomalies[0];
+  const anomalyName = topAnomaly
+    ? (topAnomaly.categoryId === 'uncategorized' ? 'Uncategorized' : data.categories.find((c) => c.id === topAnomaly.categoryId)?.display_name ?? '—')
+    : null;
+
   return (
     <div className="view">
       <header className="view-head">
         <h1>Dashboard</h1>
         <p className="muted">{label}</p>
       </header>
+
+      {topAnomaly && (
+        <div className="banner">
+          <div>
+            <div className="banner-title">{anomalyName} is {Math.round(topAnomaly.deltaPercent)}% above your 6-month average</div>
+            <div className="banner-sub">{money(topAnomaly.currentMinor)} this month vs {money(topAnomaly.averageMinor)} typical</div>
+          </div>
+          <button className="btn ghost" onClick={() => onGo('reports')}>See breakdown</button>
+        </div>
+      )}
 
       <section className="cards">
         <StatCard label="Spent this month" value={money(summary.netSpend)} tone="spend" />
