@@ -17,6 +17,13 @@ function monthLabel(ymd: string): string {
   return new Date(ymd + 'T12:00:00').toLocaleDateString('en-CA', { month: 'short', year: 'numeric' });
 }
 
+/** Whole months from `later` back to `earlier` (positive when earlier is sooner). */
+function monthsDiff(later: string, earlier: string): number {
+  const [ly, lm] = later.slice(0, 10).split('-').map((n) => parseInt(n, 10));
+  const [ey, em] = earlier.slice(0, 10).split('-').map((n) => parseInt(n, 10));
+  return (ly! - ey!) * 12 + (lm! - em!);
+}
+
 export function Goals({ data, reload }: { data: BudgetData; reload: () => Promise<void> }) {
   const today = todayISODate();
 
@@ -44,6 +51,7 @@ export function Goals({ data, reload }: { data: BudgetData; reload: () => Promis
 
 function GoalCard({ goal, today, reload }: { goal: Goal; today: string; reload: () => Promise<void> }) {
   const [contrib, setContrib] = useState('');
+  const [whatIf, setWhatIf] = useState('');
   const pct = goalProgress(goal.current_minor, goal.target_minor);
   const achieved = goal.achieved_at !== null;
 
@@ -65,6 +73,13 @@ function GoalCard({ goal, today, reload }: { goal: Goal; today: string; reload: 
     await reload();
   }
 
+  // Trade-off (Feature 24): a what-if monthly contribution → resulting target date.
+  const whatIfMinor = parseAmount(whatIf);
+  const whatIfMonths = whatIfMinor && whatIfMinor > 0 ? monthsForMonthly(goal.target_minor, goal.current_minor, whatIfMinor) : null;
+  const whatIfDate = whatIfMonths != null && Number.isFinite(whatIfMonths) ? addMonths(today, whatIfMonths) : null;
+  const baseDate = projected;
+  const monthsSooner = whatIfDate && baseDate ? monthsDiff(baseDate, whatIfDate) : null;
+
   return (
     <div className="goal-card">
       <div className="goal-top">
@@ -82,12 +97,23 @@ function GoalCard({ goal, today, reload }: { goal: Goal; today: string; reload: 
         </span>
       </div>
       {!achieved && (
-        <div className="goal-actions">
-          <input className="input tiny" placeholder="$" value={contrib} inputMode="decimal"
-            onChange={(e) => setContrib(e.target.value)} onKeyDown={(e) => { if (e.key === 'Enter') add(); }} />
-          <button type="button" className="link-btn" onClick={add}>Contribute</button>
-          <button type="button" className="link-btn danger" style={{ marginLeft: 'auto' }} onClick={async () => { await db.goals.remove(db.userId, goal.id); await reload(); }}>Remove</button>
-        </div>
+        <>
+          <div className="goal-actions">
+            <input className="input tiny" placeholder="$" value={contrib} inputMode="decimal"
+              onChange={(e) => setContrib(e.target.value)} onKeyDown={(e) => { if (e.key === 'Enter') add(); }} />
+            <button type="button" className="link-btn" onClick={add}>Contribute</button>
+            <button type="button" className="link-btn danger" style={{ marginLeft: 'auto' }} onClick={async () => { await db.goals.remove(db.userId, goal.id); await reload(); }}>Remove</button>
+          </div>
+          <div className="goal-tradeoff">
+            <span className="muted">What-if</span>
+            <input className="input tiny" placeholder="$/mo" value={whatIf} inputMode="decimal" onChange={(e) => setWhatIf(e.target.value)} />
+            <span className="muted">
+              {whatIfDate
+                ? `reaches ${monthLabel(whatIfDate)}${monthsSooner != null && monthsSooner !== 0 ? ` · ${Math.abs(monthsSooner)} mo ${monthsSooner > 0 ? 'sooner' : 'later'}` : ''}`
+                : 'try a monthly amount'}
+            </span>
+          </div>
+        </>
       )}
     </div>
   );

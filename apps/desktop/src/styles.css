@@ -377,6 +377,7 @@ tr.archived { opacity: 0.5; }
 .goal-amt { font-size: 12px; font-weight: 500; font-variant-numeric: tabular-nums; }
 .goal-meta { display: flex; justify-content: space-between; font-size: 10px; margin-top: 5px; font-variant-numeric: tabular-nums; }
 .goal-actions { display: flex; align-items: center; gap: 8px; margin-top: 8px; padding-top: 8px; border-top: 0.5px solid var(--border); }
+.goal-tradeoff { display: flex; align-items: center; gap: 8px; margin-top: 6px; font-size: 11px; }
 
 /* ---- Placeholder (planned section) ---- */
 .preview-panel {
