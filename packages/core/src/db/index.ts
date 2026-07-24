@@ -25,6 +25,10 @@ export type {
   AllocationBucket,
   BucketBalance,
   SafeToSpendSnapshot,
+  BillFrequency,
+  BillState,
+  RecurringBill,
+  BillInstance,
 } from './types.js';
 export type { Adapter } from './adapter.js';
 export { InMemoryAdapter } from './adapter.js';
@@ -70,3 +74,8 @@ export {
   ALLOCATION_BUCKETS,
   type NewBucketInput,
 } from './repositories/buckets.js';
+export {
+  BillRepository,
+  RECURRING_BILLS,
+  type NewBillInput,
+} from './repositories/bills.js';

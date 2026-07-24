@@ -248,3 +248,41 @@ export interface SafeToSpendSnapshot {
   daily_minor: Minor;
   computed_at: Timestamp;
 }
+
+// ---- Recurring bills (Feature 19) ----
+
+export type BillFrequency = 'weekly' | 'biweekly' | 'monthly' | 'yearly';
+export type BillState = 'upcoming' | 'due' | 'paid' | 'skipped' | 'overdue';
+
+export interface RecurringBill {
+  id: UUID;
+  user_id: UUID;
+  name: string;
+  merchant_id: UUID | null;
+  category_id: UUID | null;
+  account_id: UUID | null;
+  expected_minor: Minor;
+  currency_code: string;
+  frequency: BillFrequency;
+  interval: number;
+  day_of_month: number | null;  // for monthly/yearly (1..31; clamped to month end)
+  day_of_week: number | null;   // for weekly/biweekly (0=Sun..6=Sat)
+  starts_on: string;            // date
+  ends_on: string | null;       // date
+  is_active: boolean;
+  amount_tolerance_percent: number;
+  date_tolerance_days: number;
+  created_at: Timestamp;
+}
+
+export interface BillInstance {
+  id: UUID;
+  user_id: UUID;
+  bill_id: UUID;
+  due_date: string; // date
+  expected_minor: Minor;
+  state: BillState;
+  transaction_id: UUID | null;
+  paid_minor: Minor | null;
+  paid_on: string | null; // date
+}
