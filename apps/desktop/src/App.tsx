@@ -124,7 +124,7 @@ export function App() {
           {FOOT_NAV.map((n) => (
             <NavButton key={n.key} n={n} view={view} setView={setView} />
           ))}
-          <div className="region">🇨🇦 {data.profile.province} · {data.profile.base_currency}</div>
+          <div className="region">🍁 {data.profile.province} · {data.profile.base_currency}</div>
           <button className="link-btn" onClick={resetLocalData}>Reset local data</button>
         </div>
       </aside>
