@@ -15,13 +15,26 @@ export function Tax({ data, reload }: { data: BudgetData; reload: () => Promise<
   const jur = jurisdictionsFor(taxYear, province);
   const contributions = contributionsFor(taxYear);
 
+  // Business expenses (Feature 13): the deductible portion of business-use splits.
+  const businessExpenses = useMemo(() => {
+    let total = 0;
+    for (const t of data.transactions) {
+      if (t.transaction.kind !== 'expense') continue;
+      for (const s of t.splits) {
+        if (s.business_use_percent > 0) total += Math.round((s.amount_minor * s.business_use_percent) / 100);
+      }
+    }
+    return total as Minor;
+  }, [data.transactions]);
+
   const estimate = useMemo(() => {
     if (!jur || !contributions) return null;
     return computeTaxEstimate({
       incomes: data.income, taxYear, province, asOf: today,
       federal: jur.federal, provincial: jur.provincial, contributions,
+      businessExpensesMinor: businessExpenses,
     });
-  }, [data.income, jur, contributions, taxYear, province, today]);
+  }, [data.income, jur, contributions, taxYear, province, today, businessExpenses]);
 
   // Keep the allocation tax-reserve bucket's target in sync with the estimate.
   const reserveBucket = data.buckets.find((b) => isReserveBucket(b));
@@ -101,6 +114,7 @@ export function Tax({ data, reload }: { data: BudgetData; reload: () => Promise<
           <div className="panel-head"><h2>Income</h2></div>
           <Line label="Employment gross" value={money(e.employmentGrossMinor)} />
           <Line label="Self-employment net" value={money(e.selfEmploymentNetMinor)} />
+          {businessExpenses > 0 && <Line label="− Business expenses (deductible)" value={money(businessExpenses)} />}
           {e.otherIncomeMinor > 0 && <Line label="Other income" value={money(e.otherIncomeMinor)} />}
           <Line label="Combined taxable (projected)" value={money(e.projectedAnnualMinor)} strong />
         </section>

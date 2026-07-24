@@ -57,6 +57,8 @@ export function computeTaxEstimate(args: {
   reserveMultiplier?: number;
   annualOverrideMinor?: Minor | null;
   annualise?: boolean;
+  /** YTD deductible business expenses (Feature 13) — reduce self-employment net. */
+  businessExpensesMinor?: Minor;
 }): TaxEstimate {
   const { incomes, taxYear, province, asOf, federal, provincial, contributions } = args;
   const multiplier = args.reserveMultiplier ?? DEFAULT_RESERVE_MULTIPLIER;
@@ -80,7 +82,9 @@ export function computeTaxEstimate(args: {
   }
 
   const empGross = minor(Math.round(empGrossYtd * f));
-  const seNet = minor(Math.round(seNetYtd * f));
+  // Business expenses (Feature 13) reduce self-employment net before tax.
+  const bizExpenses = args.businessExpensesMinor ?? 0;
+  const seNet = minor(Math.max(0, Math.round((seNetYtd - bizExpenses) * f)));
   const other = minor(Math.round(otherYtd * f));
   const combined = args.annualOverrideMinor ?? minor(empGross + seNet + other);
   const withheld = minor(Math.round(withheldTaxYtd * f));

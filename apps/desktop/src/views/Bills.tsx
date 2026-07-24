@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import {
-  generateDueDates, billState, matchesInstance,
+  generateDueDates, billState, matchesInstance, detectSubscriptions,
   toMinor, minor, sum,
   type BillFrequency, type BillState, type RecurringBill, type Minor,
 } from '@budgetos/core';
@@ -103,6 +103,8 @@ export function Bills({ data, reload }: { data: BudgetData; reload: () => Promis
 
         <BillEditor onAdd={reload} today={today} />
       </section>
+
+      <Subscriptions data={data} reload={reload} today={today} />
     </div>
   );
 
@@ -110,6 +112,52 @@ export function Bills({ data, reload }: { data: BudgetData; reload: () => Promis
     await db.bills.remove(db.userId, id);
     await reload();
   }
+}
+
+function cadenceLabel(days: number): string {
+  if (days >= 350) return 'yearly';
+  if (days >= 25 && days <= 35) return 'monthly';
+  if (days >= 12 && days <= 16) return 'biweekly';
+  if (days >= 6 && days <= 8) return 'weekly';
+  return `~${days}d`;
+}
+
+function Subscriptions({ data, reload, today }: { data: BudgetData; reload: () => Promise<void>; today: string }) {
+  const subs = detectSubscriptions(data.transactions);
+  const merchName = (id: string) => data.merchants.find((m) => m.id === id)?.name ?? '—';
+  const trackedMerchantIds = new Set(data.bills.map((b) => b.merchant_id).filter(Boolean));
+  const untracked = subs.filter((s) => !trackedMerchantIds.has(s.merchantId));
+
+  if (untracked.length === 0) return null;
+
+  async function track(merchantId: string, typical: Minor, days: number) {
+    const freq: BillFrequency = days >= 350 ? 'yearly' : days >= 12 && days <= 16 ? 'biweekly' : days >= 6 && days <= 8 ? 'weekly' : 'monthly';
+    await db.bills.create(db.userId, {
+      name: merchName(merchantId), expected_minor: typical, frequency: freq, starts_on: today,
+      merchant_id: merchantId,
+    });
+    await reload();
+  }
+
+  return (
+    <section className="panel">
+      <div className="panel-head"><h2>Detected subscriptions</h2><span className="muted">recurring charges you’re not tracking</span></div>
+      <table className="list-table">
+        <thead><tr><th>Merchant</th><th>Cadence</th><th className="amount">Typical</th><th className="amount">Seen</th><th></th></tr></thead>
+        <tbody>
+          {untracked.map((s) => (
+            <tr key={s.merchantId}>
+              <td>{merchName(s.merchantId)}</td>
+              <td className="muted">{cadenceLabel(s.avgIntervalDays)}</td>
+              <td className="amount">{money(s.typicalMinor)}</td>
+              <td className="amount muted">{s.occurrences}×</td>
+              <td className="right"><button className="link-btn" onClick={() => track(s.merchantId, s.typicalMinor, s.avgIntervalDays)}>Track as bill</button></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </section>
+  );
 }
 
 function firstIndexForBill(rows: UpcomingRow[], billId: string): number {
