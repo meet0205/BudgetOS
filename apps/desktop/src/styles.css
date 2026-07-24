@@ -315,6 +315,23 @@ tr.archived { opacity: 0.5; }
 .legend-row .swatch { display: inline-block; width: 7px; height: 7px; border-radius: 2px; margin-right: 6px; }
 .legend-row .val { font-weight: 500; font-variant-numeric: tabular-nums; }
 
+/* ---- Allocation & safe-to-spend ---- */
+.alloc-grid { display: grid; grid-template-columns: minmax(0, 1fr) 240px; gap: 14px; align-items: start; }
+.reserve-row { background: var(--bg-warning); }
+.reserve-row:hover { background: var(--bg-warning); }
+.bar { height: 6px; background: var(--surface-1); border-radius: 4px; overflow: hidden; min-width: 90px; }
+.bar-fill { height: 100%; border-radius: 4px; }
+.bar-fill.ok { background: var(--fill-success); }
+.bar-fill.short { background: var(--fill-warning); }
+.short-note { font-size: 10px; color: var(--text-danger); margin-left: 6px; }
+
+.sts-card { position: sticky; top: 18px; }
+.sts-income { font-size: 22px; font-weight: 500; margin: 2px 0 4px; font-variant-numeric: tabular-nums; }
+.sts-breakdown { border-top: 0.5px solid var(--border); margin-top: 8px; padding-top: 8px; }
+.sts-row { display: flex; justify-content: space-between; font-size: 11px; padding: 2px 0; font-variant-numeric: tabular-nums; }
+.sts-big { font-size: 28px; font-weight: 500; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
+.sts-big.neg { color: var(--text-danger); }
+
 /* ---- Placeholder (planned section) ---- */
 .preview-panel {
   background: var(--surface-2); border: 0.5px dashed var(--border-strong);

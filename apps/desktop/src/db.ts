@@ -14,6 +14,7 @@ import {
   AccountRepository,
   MerchantRepository,
   IncomeRepository,
+  BucketRepository,
   type Profile,
 } from '@budgetos/core';
 
@@ -44,6 +45,7 @@ export const db = {
   accounts: new AccountRepository(adapter),
   merchants: new MerchantRepository(adapter),
   income: new IncomeRepository(adapter),
+  buckets: new BucketRepository(adapter),
 };
 
 /**

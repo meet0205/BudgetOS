@@ -202,3 +202,49 @@ export interface IncomeWithDeductions {
   document: IncomeDocument;
   deductions: IncomeDeduction[];
 }
+
+// ---- Allocation & safe-to-spend (Feature 06) ----
+
+export type AllocationMode = 'fixed' | 'percent_of_income' | 'remainder';
+
+export interface AllocationBucket {
+  id: UUID;
+  user_id: UUID;
+  name: string;
+  mode: AllocationMode;
+  target_minor: Minor | null;      // fixed buckets
+  percent: number | null;          // percent_of_income buckets (e.g. 10 for 10%)
+  weight: number;                  // remainder split weight
+  priority: number;                // funded ascending
+  linked_account_id: UUID | null;
+  is_system: boolean;
+  system_kind: string | null;      // 'tax_reserve' identifies the reserve bucket
+  is_archived: boolean;
+  created_at: Timestamp;
+}
+
+export interface BucketBalance {
+  id: UUID;
+  user_id: UUID;
+  bucket_id: UUID;
+  period_start: string; // date
+  period_end: string;   // date
+  target_minor: Minor;
+  funded_minor: Minor;
+  spent_minor: Minor;
+  shortfall_minor: Minor;
+}
+
+export interface SafeToSpendSnapshot {
+  id: UUID;
+  user_id: UUID;
+  period_start: string; // date
+  period_end: string;   // date
+  income_minor: Minor;
+  allocated_minor: Minor;
+  tax_reserved_minor: Minor;
+  spent_minor: Minor;
+  safe_to_spend_minor: Minor;
+  daily_minor: Minor;
+  computed_at: Timestamp;
+}

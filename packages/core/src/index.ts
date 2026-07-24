@@ -5,3 +5,4 @@ export * from './merchants/index.js';
 export * from './transactions/index.js';
 export * from './reporting/index.js';
 export * from './income/index.js';
+export * from './budget/index.js';

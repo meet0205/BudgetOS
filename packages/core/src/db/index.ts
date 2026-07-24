@@ -21,6 +21,10 @@ export type {
   IncomeDeduction,
   IncomeSource,
   IncomeWithDeductions,
+  AllocationMode,
+  AllocationBucket,
+  BucketBalance,
+  SafeToSpendSnapshot,
 } from './types.js';
 export type { Adapter } from './adapter.js';
 export { InMemoryAdapter } from './adapter.js';
@@ -61,3 +65,8 @@ export {
   type NewIncomeInput,
   type NewDeductionInput,
 } from './repositories/income.js';
+export {
+  BucketRepository,
+  ALLOCATION_BUCKETS,
+  type NewBucketInput,
+} from './repositories/buckets.js';

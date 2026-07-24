@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import type {
   Account, Category, TransactionWithSplits, Profile, Merchant, Minor,
-  IncomeWithDeductions, IncomeSource,
+  IncomeWithDeductions, IncomeSource, AllocationBucket,
 } from '@budgetos/core';
 import { computeBalances } from '@budgetos/core';
 import { db, bootstrap, resetLocalData } from './db.js';
@@ -10,6 +10,7 @@ import { Accounts } from './views/Accounts.js';
 import { Transactions } from './views/Transactions.js';
 import { Categories } from './views/Categories.js';
 import { Income } from './views/Income.js';
+import { Allocation } from './views/Allocation.js';
 import { Placeholder, type SectionMeta } from './views/Placeholder.js';
 
 export interface BudgetData {
@@ -20,6 +21,7 @@ export interface BudgetData {
   merchants: Merchant[];
   income: IncomeWithDeductions[];
   incomeSources: IncomeSource[];
+  buckets: AllocationBucket[];
   /** Live account balances derived from the ledger (opening + signed activity). */
   balances: Map<string, Minor>;
 }
@@ -77,7 +79,6 @@ const FOOT_NAV: { key: ViewKey; label: string }[] = [
 const SECTIONS: Partial<Record<ViewKey, SectionMeta>> = {
   import: { title: 'Import & review', blurb: 'Batch drag-and-drop with per-file status, split-pane receipt review with image-to-field highlighting.', feature: 'Features 07–10 (document capture, OCR, receipt parser, review)', file: '02-import-review.html' },
   tax: { title: 'Tax', blurb: 'Annual tax position — federal & Nova Scotia brackets, CPP/EI, the CPP2 line, instalments.', feature: 'Feature 05 (tax estimation) — needs verified CRA figures', file: '03-income-tax.html' },
-  allocation: { title: 'Allocation', blurb: 'Allocation buckets in funding order with the locked tax reserve and safe-to-spend.', feature: 'Feature 06 (allocation & safe-to-spend)', file: '04-ledger-allocation-explore.html' },
   bills: { title: 'Bills', blurb: 'Recurring bills with due dates and bill-creep detection.', feature: 'Feature 19 (recurring bills)', file: '05-reports-bills-goals-settings.html' },
   reports: { title: 'Reports', blurb: 'Monthly report with year-over-year comparison and the trade-off slider.', feature: 'Feature 17 (reports) + 24 (trade-offs)', file: '05-reports-bills-goals-settings.html' },
   explore: { title: 'Explore', blurb: 'Item-level filter across purchases — by product, store, and price over time.', feature: 'Feature 16 (filtering) + 22 (price tracking)', file: '04-ledger-allocation-explore.html' },
@@ -91,7 +92,7 @@ export function App() {
   const [error, setError] = useState<string | null>(null);
 
   const reload = useCallback(async () => {
-    const [profile, accounts, categories, transactions, merchants, income, incomeSources] = await Promise.all([
+    const [profile, accounts, categories, transactions, merchants, income, incomeSources, buckets] = await Promise.all([
       db.profiles.get(db.userId),
       db.accounts.list(db.userId, true),
       db.categories.listVisible(db.userId),
@@ -99,9 +100,10 @@ export function App() {
       db.merchants.list(db.userId),
       db.income.list(db.userId),
       db.income.listSources(db.userId),
+      db.buckets.list(db.userId, true),
     ]);
     const balances = computeBalances(accounts, transactions);
-    setData({ profile: profile!, accounts, categories, transactions, merchants, income, incomeSources, balances });
+    setData({ profile: profile!, accounts, categories, transactions, merchants, income, incomeSources, buckets, balances });
   }, []);
 
   useEffect(() => {
@@ -140,6 +142,7 @@ export function App() {
         {view === 'dashboard' && <Dashboard data={data} onGo={setView} />}
         {view === 'transactions' && <Transactions data={data} reload={reload} />}
         {view === 'income' && <Income data={data} reload={reload} />}
+        {view === 'allocation' && <Allocation data={data} reload={reload} />}
         {view === 'accounts' && <Accounts data={data} reload={reload} />}
         {view === 'categories' && <Categories data={data} />}
         {SECTIONS[view] && <Placeholder meta={SECTIONS[view]!} />}
