@@ -12,7 +12,8 @@
   "dependencies": {
     "@budgetos/core": "*",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "tesseract.js": "^5.1.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.48",

@@ -3,6 +3,7 @@ import { jurisdictionsFor } from '@budgetos/core';
 import type { BudgetData } from '../App.js';
 import { db } from '../db.js';
 import { formatDateOnly } from '../format.js';
+import { getOcrSettings, setOcrSettings, type OcrEngine } from '../ocr/settings.js';
 
 const PROVINCES = ['AB', 'BC', 'MB', 'NB', 'NL', 'NS', 'NT', 'NU', 'ON', 'PE', 'QC', 'SK', 'YT'];
 const CURRENCIES = ['CAD', 'USD', 'EUR', 'GBP'];
@@ -75,6 +76,8 @@ export function Settings({ data, reload }: { data: BudgetData; reload: () => Pro
         {err && <p className="error">{err}</p>}
       </section>
 
+      <OcrSettings />
+
       <section className="panel">
         <div className="panel-head"><h2>Tax data</h2></div>
         {jur ? (
@@ -106,6 +109,37 @@ function resetConfirm() {
     localStorage.removeItem('budgetos.v1');
     location.reload();
   }
+}
+
+function OcrSettings() {
+  const [s, setS] = useState(getOcrSettings());
+  function update(patch: Parameters<typeof setOcrSettings>[0]) { setS(setOcrSettings(patch)); }
+
+  return (
+    <section className="panel">
+      <div className="panel-head"><h2>Receipt OCR</h2><span className="muted">reads dropped receipts on the Import screen</span></div>
+      <div className="settings-grid">
+        <Field label="Engine" hint="How receipts are read into fields">
+          <select className="input" value={s.engine} onChange={(e) => update({ engine: e.target.value as OcrEngine })}>
+            <option value="tesseract">On-device (Tesseract) — private, no key</option>
+            <option value="claude">Claude vision — most accurate, needs API key</option>
+            <option value="off">Off — enter manually</option>
+          </select>
+        </Field>
+        {s.engine === 'claude' && (
+          <Field label="Anthropic API key" hint="Stored only in this browser; used for receipt reading">
+            <input className="input" type="password" value={s.anthropicKey} placeholder="sk-ant-…"
+              onChange={(e) => update({ anthropicKey: e.target.value.trim() })} />
+          </Field>
+        )}
+      </div>
+      <p className="muted" style={{ fontSize: 11, marginTop: 8 }}>
+        {s.engine === 'tesseract' && 'On-device: the receipt never leaves your machine. Accuracy varies with photo quality.'}
+        {s.engine === 'claude' && 'Claude vision needs an Anthropic API key — there is no subscription-login path for third-party apps. Your key stays in this browser and the image is sent to Anthropic only when you import.'}
+        {s.engine === 'off' && 'Auto-fill disabled; you type each receipt’s details.'}
+      </p>
+    </section>
+  );
 }
 
 function Field({ label, hint, children }: { label: string; hint?: string; children: React.ReactNode }) {

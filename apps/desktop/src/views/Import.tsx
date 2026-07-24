@@ -3,16 +3,22 @@ import { toMinor, type Category, type TxnKind, type Minor } from '@budgetos/core
 import type { BudgetData } from '../App.js';
 import { db } from '../db.js';
 import { todayISODate } from '../format.js';
+import { extractReceipt } from '../ocr/engines.js';
+import { getOcrSettings } from '../ocr/settings.js';
+
+type OcrStatus = 'reading' | 'done' | 'error' | null;
 
 interface QueueItem {
   id: string;
   fileName: string;
+  file: File;
   previewUrl: string | null; // in-memory object URL (images only)
   merchant: string;
   date: string;
   amount: string;
   categoryId: string;
   accountId: string;
+  ocr: OcrStatus;
 }
 
 let counter = 0;
@@ -25,19 +31,36 @@ export function Import({ data, reload }: { data: BudgetData; reload: () => Promi
   const activeAccounts = data.accounts.filter((a) => !a.is_archived);
   const today = todayISODate();
 
+  const ocrEngine = getOcrSettings().engine;
+
   function addFiles(files: FileList | null) {
     if (!files) return;
+    const willOcr = ocrEngine !== 'off';
     const items: QueueItem[] = Array.from(files).map((f) => ({
       id: `q${++counter}`,
       fileName: f.name,
+      file: f,
       previewUrl: f.type.startsWith('image/') ? URL.createObjectURL(f) : null,
       merchant: '',
       date: today,
       amount: '',
       categoryId: '',
       accountId: activeAccounts[0]?.id ?? '',
+      ocr: willOcr && f.type.startsWith('image/') ? 'reading' : null,
     }));
     setQueue((q) => [...q, ...items]);
+    // Kick off OCR for each image; fill fields as each finishes.
+    for (const it of items) {
+      if (it.ocr !== 'reading') continue;
+      extractReceipt(it.file)
+        .then((r) => update(it.id, {
+          merchant: r.merchant ?? '',
+          date: r.date ?? today,
+          amount: r.totalMinor != null ? (r.totalMinor / 100).toFixed(2) : '',
+          ocr: 'done',
+        }))
+        .catch(() => update(it.id, { ocr: 'error' }));
+    }
   }
 
   function update(id: string, patch: Partial<QueueItem>) {
@@ -85,8 +108,16 @@ export function Import({ data, reload }: { data: BudgetData; reload: () => Promi
 
       <div className="banner" style={{ background: 'var(--bg-accent)' }}>
         <div>
-          <div className="banner-title">Automatic extraction (OCR) isn’t wired yet</div>
-          <div className="banner-sub">Drop receipts to keep them queued and enter the details to post each one. Features 08–09 add automatic field extraction.</div>
+          <div className="banner-title">
+            {ocrEngine === 'off' ? 'OCR is off — enter details manually'
+              : ocrEngine === 'claude' ? 'OCR: Claude vision'
+              : 'OCR: on-device (Tesseract)'}
+          </div>
+          <div className="banner-sub">
+            {ocrEngine === 'off'
+              ? 'Turn on receipt OCR in Settings to auto-fill fields.'
+              : 'Drop receipts — fields auto-fill for you to review, then post. Change the engine in Settings.'}
+          </div>
         </div>
       </div>
 
@@ -113,7 +144,12 @@ export function Import({ data, reload }: { data: BudgetData; reload: () => Promi
                   ? <img src={it.previewUrl} alt={it.fileName} className="import-thumb" />
                   : <div className="import-thumb import-thumb-doc">PDF</div>}
                 <div className="import-fields">
-                  <div className="import-file muted">{it.fileName}</div>
+                  <div className="import-file muted">
+                    {it.fileName}
+                    {it.ocr === 'reading' && <span className="chip" style={{ marginLeft: 8 }}>reading…</span>}
+                    {it.ocr === 'done' && <span className="chip" style={{ marginLeft: 8, background: 'var(--bg-success)', color: 'var(--text-success)' }}>auto-filled</span>}
+                    {it.ocr === 'error' && <span className="chip" style={{ marginLeft: 8, background: 'var(--bg-danger)', color: 'var(--text-danger)' }}>OCR failed</span>}
+                  </div>
                   <div className="import-grid">
                     <input className="input" placeholder="Merchant" value={it.merchant} onChange={(e) => update(it.id, { merchant: e.target.value })} />
                     <input className="input" type="date" value={it.date} onChange={(e) => update(it.id, { date: e.target.value })} />
