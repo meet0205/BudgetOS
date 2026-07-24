@@ -16,6 +16,7 @@ import { Goals } from './views/Goals.js';
 import { Tax } from './views/Tax.js';
 import { Reports } from './views/Reports.js';
 import { Settings } from './views/Settings.js';
+import { Explore } from './views/Explore.js';
 import { Placeholder, type SectionMeta } from './views/Placeholder.js';
 
 export interface BudgetData {
@@ -85,7 +86,6 @@ const FOOT_NAV: { key: ViewKey; label: string }[] = [
 /** Metadata for sections whose feature isn't built — drives the honest placeholder. */
 const SECTIONS: Partial<Record<ViewKey, SectionMeta>> = {
   import: { title: 'Import & review', blurb: 'Batch drag-and-drop with per-file status, split-pane receipt review with image-to-field highlighting.', feature: 'Features 07–10 (document capture, OCR, receipt parser, review)', file: '02-import-review.html' },
-  explore: { title: 'Explore', blurb: 'Item-level filter across purchases — by product, store, and price over time.', feature: 'Feature 16 (filtering) + 22 (price tracking)', file: '04-ledger-allocation-explore.html' },
 };
 
 export function App() {
@@ -150,6 +150,7 @@ export function App() {
         {view === 'allocation' && <Allocation data={data} reload={reload} />}
         {view === 'bills' && <Bills data={data} reload={reload} />}
         {view === 'reports' && <Reports data={data} />}
+        {view === 'explore' && <Explore data={data} />}
         {view === 'goals' && <Goals data={data} reload={reload} />}
         {view === 'accounts' && <Accounts data={data} reload={reload} />}
         {view === 'categories' && <Categories data={data} />}
