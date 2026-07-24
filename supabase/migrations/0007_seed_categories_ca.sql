@@ -5,10 +5,15 @@
 -- Source of truth: packages/core/src/categories/ca-taxonomy.json
 --
 -- System categories: user_id IS NULL, is_system true, visible to all users.
--- Two passes: insert rows, then resolve parent_id by slug within each layer.
+-- A temp table holds the seed so both passes (insert rows, then resolve
+-- parent_id by slug) can reference it — a CTE is scoped to a single statement.
 
-with seed(slug, layer, display_name, parent_slug, business_expense_kind, sort_order) as (
-  values
+create temporary table _cat_seed (
+  slug text, layer category_layer, display_name text,
+  parent_slug text, business_expense_kind text, sort_order int
+);
+
+insert into _cat_seed (slug, layer, display_name, parent_slug, business_expense_kind, sort_order) values
   ('groceries', 'transaction'::category_layer, 'Groceries', null, null, 0),
   ('dining', 'transaction'::category_layer, 'Dining', null, null, 1),
   ('vehicle', 'transaction'::category_layer, 'Vehicle', null, null, 2),
@@ -81,18 +86,20 @@ with seed(slug, layer, display_name, parent_slug, business_expense_kind, sort_or
   ('p-phone', 'product'::category_layer, 'Phone & accessories', 'p-tech', null, 1),
   ('p-subscriptions-digital', 'product'::category_layer, 'Digital subscriptions', 'p-tech', null, 2),
   ('p-other', 'product'::category_layer, 'Other', null, null, 9),
-  ('p-uncategorised', 'product'::category_layer, 'Uncategorised', 'p-other', null, 0)
-)
+  ('p-uncategorised', 'product'::category_layer, 'Uncategorised', 'p-other', null, 0);
+
 insert into categories (user_id, layer, slug, display_name, is_system, business_expense_kind, sort_order)
 select null, layer, slug, display_name, true, business_expense_kind, sort_order
-from seed
+from _cat_seed
 on conflict do nothing;
 
 -- Resolve parent_id within each layer, for system rows only.
 update categories c
 set parent_id = p.id
-from seed s
+from _cat_seed s
 join categories p
   on p.slug = s.parent_slug and p.layer = s.layer and p.user_id is null
 where c.slug = s.slug and c.layer = s.layer and c.user_id is null
   and s.parent_slug is not null;
+
+drop table _cat_seed;
