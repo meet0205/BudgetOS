@@ -12,12 +12,14 @@
     "test": "npm run test --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "gen:seed-sql": "node scripts/gen-seed-sql.mjs",
+    "db:push": "node scripts/db-push.mjs",
     "dev": "npm run dev --workspace @budgetos/desktop"
   },
   "engines": {
     "node": ">=16.0.0"
   },
   "devDependencies": {
+    "pg": "^8.22.0",
     "typescript": "~5.3.3"
   }
 }
