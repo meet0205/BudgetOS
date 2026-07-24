@@ -14,6 +14,13 @@ export type {
   Category,
   CategoryMerge,
   Merchant,
+  IncomeDocType,
+  IncomeKind,
+  DeductionKind,
+  IncomeDocument,
+  IncomeDeduction,
+  IncomeSource,
+  IncomeWithDeductions,
 } from './types.js';
 export type { Adapter } from './adapter.js';
 export { InMemoryAdapter } from './adapter.js';
@@ -46,3 +53,11 @@ export {
   MERCHANTS,
   type MerchantSuggestion,
 } from './repositories/merchants.js';
+export {
+  IncomeRepository,
+  INCOME_DOCUMENTS,
+  INCOME_DEDUCTIONS,
+  INCOME_SOURCES,
+  type NewIncomeInput,
+  type NewDeductionInput,
+} from './repositories/income.js';

@@ -130,3 +130,75 @@ export interface TransactionWithSplits {
   transaction: Transaction;
   splits: TransactionSplit[];
 }
+
+// ---- Income (Feature 04) ----
+
+export type IncomeDocType =
+  | 'payslip' | 't4' | 't4a' | 't5' | 'invoice' | 'uber_summary' | 'manual';
+
+export type IncomeKind =
+  | 'employment' | 'self_employment' | 'investment' | 'rental' | 'other';
+
+/** Controlled deduction vocabulary — Feature 05 consumes these by type. */
+export type DeductionKind =
+  | 'federal_tax' | 'provincial_tax'
+  | 'cpp' | 'cpp2' | 'ei' | 'qpp' | 'qpip'
+  | 'rpp' | 'rrsp' | 'union_dues'
+  | 'group_benefits' | 'life_insurance' | 'ltd'
+  | 'garnishment' | 'other';
+
+export interface IncomeDocument {
+  id: UUID;
+  user_id: UUID;
+  doc_type: IncomeDocType;
+  income_kind: IncomeKind;
+  source_file_id: UUID | null;
+  employer_name: string | null;
+  employer_id: string | null;
+  period_start: string | null; // date
+  period_end: string | null;   // date
+  pay_date: string;            // date
+  tax_year: number;
+  province: string;            // char(2)
+  gross_minor: Minor;
+  net_minor: Minor | null;
+  ytd_gross_minor: Minor | null;
+  ytd_net_minor: Minor | null;
+  platform_fees_minor: Minor;
+  hst_collected_minor: Minor;
+  currency_code: string;
+  is_user_entered: boolean;
+  /** Persisted so Feature 05 can exclude unbalanced records; see reconcile(). */
+  reconciles: boolean;
+  created_at: Timestamp;
+  updated_at: Timestamp;
+  deleted_at: Timestamp | null;
+}
+
+export interface IncomeDeduction {
+  id: UUID;
+  income_document_id: UUID;
+  user_id: UUID;
+  kind: DeductionKind;
+  raw_label: string | null;
+  amount_minor: Minor;
+  ytd_amount_minor: Minor | null;
+  is_user_entered: boolean;
+}
+
+export interface IncomeSource {
+  id: UUID;
+  user_id: UUID;
+  name: string;
+  income_kind: IncomeKind;
+  employer_id: string | null;
+  typical_gross_minor: Minor | null;
+  pay_frequency: string | null;
+  last_used_at: Timestamp | null;
+}
+
+/** An income document with its deductions — the unit reads and writes work in. */
+export interface IncomeWithDeductions {
+  document: IncomeDocument;
+  deductions: IncomeDeduction[];
+}

@@ -1,11 +1,15 @@
 import { useCallback, useEffect, useState } from 'react';
-import type { Account, Category, TransactionWithSplits, Profile, Merchant, Minor } from '@budgetos/core';
+import type {
+  Account, Category, TransactionWithSplits, Profile, Merchant, Minor,
+  IncomeWithDeductions, IncomeSource,
+} from '@budgetos/core';
 import { computeBalances } from '@budgetos/core';
 import { db, bootstrap, resetLocalData } from './db.js';
 import { Dashboard } from './views/Dashboard.js';
 import { Accounts } from './views/Accounts.js';
 import { Transactions } from './views/Transactions.js';
 import { Categories } from './views/Categories.js';
+import { Income } from './views/Income.js';
 import { Placeholder, type SectionMeta } from './views/Placeholder.js';
 
 export interface BudgetData {
@@ -14,6 +18,8 @@ export interface BudgetData {
   categories: Category[];
   transactions: TransactionWithSplits[];
   merchants: Merchant[];
+  income: IncomeWithDeductions[];
+  incomeSources: IncomeSource[];
   /** Live account balances derived from the ledger (opening + signed activity). */
   balances: Map<string, Minor>;
 }
@@ -70,7 +76,6 @@ const FOOT_NAV: { key: ViewKey; label: string }[] = [
 /** Metadata for sections whose feature isn't built — drives the honest placeholder. */
 const SECTIONS: Partial<Record<ViewKey, SectionMeta>> = {
   import: { title: 'Import & review', blurb: 'Batch drag-and-drop with per-file status, split-pane receipt review with image-to-field highlighting.', feature: 'Features 07–10 (document capture, OCR, receipt parser, review)', file: '02-import-review.html' },
-  income: { title: 'Income', blurb: 'Manual income entry with the YTD column gate and live reconciliation against pay stubs.', feature: 'Feature 04 (manual income) + 11 (income parser)', file: '03-income-tax.html' },
   tax: { title: 'Tax', blurb: 'Annual tax position — federal & Nova Scotia brackets, CPP/EI, the CPP2 line, instalments.', feature: 'Feature 05 (tax estimation) — needs verified CRA figures', file: '03-income-tax.html' },
   allocation: { title: 'Allocation', blurb: 'Allocation buckets in funding order with the locked tax reserve and safe-to-spend.', feature: 'Feature 06 (allocation & safe-to-spend)', file: '04-ledger-allocation-explore.html' },
   bills: { title: 'Bills', blurb: 'Recurring bills with due dates and bill-creep detection.', feature: 'Feature 19 (recurring bills)', file: '05-reports-bills-goals-settings.html' },
@@ -86,15 +91,17 @@ export function App() {
   const [error, setError] = useState<string | null>(null);
 
   const reload = useCallback(async () => {
-    const [profile, accounts, categories, transactions, merchants] = await Promise.all([
+    const [profile, accounts, categories, transactions, merchants, income, incomeSources] = await Promise.all([
       db.profiles.get(db.userId),
       db.accounts.list(db.userId, true),
       db.categories.listVisible(db.userId),
       db.transactions.list(db.userId),
       db.merchants.list(db.userId),
+      db.income.list(db.userId),
+      db.income.listSources(db.userId),
     ]);
     const balances = computeBalances(accounts, transactions);
-    setData({ profile: profile!, accounts, categories, transactions, merchants, balances });
+    setData({ profile: profile!, accounts, categories, transactions, merchants, income, incomeSources, balances });
   }, []);
 
   useEffect(() => {
@@ -132,6 +139,7 @@ export function App() {
       <main className="content">
         {view === 'dashboard' && <Dashboard data={data} onGo={setView} />}
         {view === 'transactions' && <Transactions data={data} reload={reload} />}
+        {view === 'income' && <Income data={data} reload={reload} />}
         {view === 'accounts' && <Accounts data={data} reload={reload} />}
         {view === 'categories' && <Categories data={data} />}
         {SECTIONS[view] && <Placeholder meta={SECTIONS[view]!} />}
