@@ -8,3 +8,4 @@ export * from './income/index.js';
 export * from './budget/index.js';
 export * from './bills/index.js';
 export * from './goals/index.js';
+export * from './tax/index.js';

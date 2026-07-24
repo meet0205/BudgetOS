@@ -13,6 +13,7 @@ import { Income } from './views/Income.js';
 import { Allocation } from './views/Allocation.js';
 import { Bills } from './views/Bills.js';
 import { Goals } from './views/Goals.js';
+import { Tax } from './views/Tax.js';
 import { Placeholder, type SectionMeta } from './views/Placeholder.js';
 
 export interface BudgetData {
@@ -82,7 +83,6 @@ const FOOT_NAV: { key: ViewKey; label: string }[] = [
 /** Metadata for sections whose feature isn't built — drives the honest placeholder. */
 const SECTIONS: Partial<Record<ViewKey, SectionMeta>> = {
   import: { title: 'Import & review', blurb: 'Batch drag-and-drop with per-file status, split-pane receipt review with image-to-field highlighting.', feature: 'Features 07–10 (document capture, OCR, receipt parser, review)', file: '02-import-review.html' },
-  tax: { title: 'Tax', blurb: 'Annual tax position — federal & Nova Scotia brackets, CPP/EI, the CPP2 line, instalments.', feature: 'Feature 05 (tax estimation) — needs verified CRA figures', file: '03-income-tax.html' },
   reports: { title: 'Reports', blurb: 'Monthly report with year-over-year comparison and the trade-off slider.', feature: 'Feature 17 (reports) + 24 (trade-offs)', file: '05-reports-bills-goals-settings.html' },
   explore: { title: 'Explore', blurb: 'Item-level filter across purchases — by product, store, and price over time.', feature: 'Feature 16 (filtering) + 22 (price tracking)', file: '04-ledger-allocation-explore.html' },
   settings: { title: 'Settings', blurb: 'Province & bracket freshness, business-use, HST as a separate obligation, AI settings.', feature: 'Features 06 / 13 / 15 / 29 / 30', file: '06-settings-hst-onboarding.html' },
@@ -146,6 +146,7 @@ export function App() {
         {view === 'dashboard' && <Dashboard data={data} onGo={setView} />}
         {view === 'transactions' && <Transactions data={data} reload={reload} />}
         {view === 'income' && <Income data={data} reload={reload} />}
+        {view === 'tax' && <Tax data={data} reload={reload} />}
         {view === 'allocation' && <Allocation data={data} reload={reload} />}
         {view === 'bills' && <Bills data={data} reload={reload} />}
         {view === 'goals' && <Goals data={data} reload={reload} />}
