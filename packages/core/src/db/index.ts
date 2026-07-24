@@ -29,6 +29,8 @@ export type {
   BillState,
   RecurringBill,
   BillInstance,
+  Goal,
+  GoalContribution,
 } from './types.js';
 export type { Adapter } from './adapter.js';
 export { InMemoryAdapter } from './adapter.js';
@@ -79,3 +81,9 @@ export {
   RECURRING_BILLS,
   type NewBillInput,
 } from './repositories/bills.js';
+export {
+  GoalRepository,
+  GOALS,
+  GOAL_CONTRIBUTIONS,
+  type NewGoalInput,
+} from './repositories/goals.js';

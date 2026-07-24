@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import type {
   Account, Category, TransactionWithSplits, Profile, Merchant, Minor,
-  IncomeWithDeductions, IncomeSource, AllocationBucket, RecurringBill,
+  IncomeWithDeductions, IncomeSource, AllocationBucket, RecurringBill, Goal,
 } from '@budgetos/core';
 import { computeBalances } from '@budgetos/core';
 import { db, bootstrap, resetLocalData } from './db.js';
@@ -12,6 +12,7 @@ import { Categories } from './views/Categories.js';
 import { Income } from './views/Income.js';
 import { Allocation } from './views/Allocation.js';
 import { Bills } from './views/Bills.js';
+import { Goals } from './views/Goals.js';
 import { Placeholder, type SectionMeta } from './views/Placeholder.js';
 
 export interface BudgetData {
@@ -24,6 +25,7 @@ export interface BudgetData {
   incomeSources: IncomeSource[];
   buckets: AllocationBucket[];
   bills: RecurringBill[];
+  goals: Goal[];
   /** Live account balances derived from the ledger (opening + signed activity). */
   balances: Map<string, Minor>;
 }
@@ -83,7 +85,6 @@ const SECTIONS: Partial<Record<ViewKey, SectionMeta>> = {
   tax: { title: 'Tax', blurb: 'Annual tax position — federal & Nova Scotia brackets, CPP/EI, the CPP2 line, instalments.', feature: 'Feature 05 (tax estimation) — needs verified CRA figures', file: '03-income-tax.html' },
   reports: { title: 'Reports', blurb: 'Monthly report with year-over-year comparison and the trade-off slider.', feature: 'Feature 17 (reports) + 24 (trade-offs)', file: '05-reports-bills-goals-settings.html' },
   explore: { title: 'Explore', blurb: 'Item-level filter across purchases — by product, store, and price over time.', feature: 'Feature 16 (filtering) + 22 (price tracking)', file: '04-ledger-allocation-explore.html' },
-  goals: { title: 'Goals', blurb: 'Savings goals with funding progress and projected target dates.', feature: 'Feature 21 (goals)', file: '05-reports-bills-goals-settings.html' },
   settings: { title: 'Settings', blurb: 'Province & bracket freshness, business-use, HST as a separate obligation, AI settings.', feature: 'Features 06 / 13 / 15 / 29 / 30', file: '06-settings-hst-onboarding.html' },
 };
 
@@ -93,7 +94,7 @@ export function App() {
   const [error, setError] = useState<string | null>(null);
 
   const reload = useCallback(async () => {
-    const [profile, accounts, categories, transactions, merchants, income, incomeSources, buckets, bills] = await Promise.all([
+    const [profile, accounts, categories, transactions, merchants, income, incomeSources, buckets, bills, goals] = await Promise.all([
       db.profiles.get(db.userId),
       db.accounts.list(db.userId, true),
       db.categories.listVisible(db.userId),
@@ -103,9 +104,10 @@ export function App() {
       db.income.listSources(db.userId),
       db.buckets.list(db.userId, true),
       db.bills.list(db.userId, true),
+      db.goals.list(db.userId),
     ]);
     const balances = computeBalances(accounts, transactions);
-    setData({ profile: profile!, accounts, categories, transactions, merchants, income, incomeSources, buckets, bills, balances });
+    setData({ profile: profile!, accounts, categories, transactions, merchants, income, incomeSources, buckets, bills, goals, balances });
   }, []);
 
   useEffect(() => {
@@ -146,6 +148,7 @@ export function App() {
         {view === 'income' && <Income data={data} reload={reload} />}
         {view === 'allocation' && <Allocation data={data} reload={reload} />}
         {view === 'bills' && <Bills data={data} reload={reload} />}
+        {view === 'goals' && <Goals data={data} reload={reload} />}
         {view === 'accounts' && <Accounts data={data} reload={reload} />}
         {view === 'categories' && <Categories data={data} />}
         {SECTIONS[view] && <Placeholder meta={SECTIONS[view]!} />}

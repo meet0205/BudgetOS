@@ -7,3 +7,4 @@ export * from './reporting/index.js';
 export * from './income/index.js';
 export * from './budget/index.js';
 export * from './bills/index.js';
+export * from './goals/index.js';

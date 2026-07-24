@@ -286,3 +286,28 @@ export interface BillInstance {
   paid_minor: Minor | null;
   paid_on: string | null; // date
 }
+
+// ---- Savings goals (Feature 21) ----
+
+export interface Goal {
+  id: UUID;
+  user_id: UUID;
+  name: string;
+  target_minor: Minor;
+  current_minor: Minor;
+  target_date: string | null;              // date
+  monthly_contribution_minor: Minor | null;
+  priority: number;
+  bucket_id: UUID | null;
+  achieved_at: Timestamp | null;
+  created_at: Timestamp;
+}
+
+export interface GoalContribution {
+  id: UUID;
+  user_id: UUID;
+  goal_id: UUID;
+  amount_minor: Minor;
+  occurred_at: string; // date
+  source: string;
+}
