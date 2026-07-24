@@ -17,6 +17,7 @@ import { Tax } from './views/Tax.js';
 import { Reports } from './views/Reports.js';
 import { Settings } from './views/Settings.js';
 import { Explore } from './views/Explore.js';
+import { Import } from './views/Import.js';
 import { Placeholder, type SectionMeta } from './views/Placeholder.js';
 
 export interface BudgetData {
@@ -84,9 +85,7 @@ const FOOT_NAV: { key: ViewKey; label: string }[] = [
 ];
 
 /** Metadata for sections whose feature isn't built — drives the honest placeholder. */
-const SECTIONS: Partial<Record<ViewKey, SectionMeta>> = {
-  import: { title: 'Import & review', blurb: 'Batch drag-and-drop with per-file status, split-pane receipt review with image-to-field highlighting.', feature: 'Features 07–10 (document capture, OCR, receipt parser, review)', file: '02-import-review.html' },
-};
+const SECTIONS: Partial<Record<ViewKey, SectionMeta>> = {};
 
 export function App() {
   const [data, setData] = useState<BudgetData | null>(null);
@@ -145,6 +144,7 @@ export function App() {
       <main className="content">
         {view === 'dashboard' && <Dashboard data={data} onGo={setView} />}
         {view === 'transactions' && <Transactions data={data} reload={reload} />}
+        {view === 'import' && <Import data={data} reload={reload} />}
         {view === 'income' && <Income data={data} reload={reload} />}
         {view === 'tax' && <Tax data={data} reload={reload} />}
         {view === 'allocation' && <Allocation data={data} reload={reload} />}

@@ -48,6 +48,15 @@ export function Tax({ data, reload }: { data: BudgetData; reload: () => Promise<
     );
   }
 
+  // HST (Feature 30) — a separate obligation, never merged into income tax.
+  // Collected on self-employment income; input tax credits (ITCs) are HST paid
+  // on business-use purchases. Net = collected − ITCs.
+  const hstCollected = data.income.reduce((s, r) => s + r.document.hst_collected_minor, 0) as Minor;
+  const hstITC = data.transactions.reduce(
+    (s, t) => s + t.splits.reduce((ss, sp) => ss + (sp.business_use_percent > 0 ? sp.hst_paid_minor : 0), 0), 0,
+  ) as Minor;
+  const hstNet = (hstCollected - hstITC) as Minor;
+
   const e = estimate!;
   const owing = e.shortfallMinor;
   const stale = isStale(e.verifiedOn, today);
@@ -118,6 +127,16 @@ export function Tax({ data, reload }: { data: BudgetData; reload: () => Promise<
           </div>
         </div>
       )}
+
+      <div className="banner" style={{ background: 'var(--bg-warning)' }}>
+        <div>
+          <div className="banner-title">HST — a separate obligation</div>
+          <div className="banner-sub">
+            Collected {money(hstCollected)} · ITCs {money(hstITC)} · net {money(hstNet)}.
+            Not part of income tax; filed and remitted on its own schedule once registered.
+          </div>
+        </div>
+      </div>
 
       <section className="panel">
         <div className="panel-head"><h2>Sources</h2><span className="muted">verified {formatDateOnly(e.verifiedOn)}</span></div>
