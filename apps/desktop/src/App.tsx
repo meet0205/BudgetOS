@@ -4,7 +4,9 @@ import type {
   IncomeWithDeductions, IncomeSource, AllocationBucket, RecurringBill, Goal,
 } from '@budgetos/core';
 import { computeBalances } from '@budgetos/core';
-import { db, bootstrap, resetLocalData } from './db.js';
+import { db, bootstrap, resetLocalData, activateSupabase } from './db.js';
+import { supabaseEnabled, loadSession, signOut, type Session } from './supabase/client.js';
+import { Login } from './views/Login.js';
 import { Dashboard } from './views/Dashboard.js';
 import { Accounts } from './views/Accounts.js';
 import { Transactions } from './views/Transactions.js';
@@ -91,6 +93,9 @@ export function App() {
   const [data, setData] = useState<BudgetData | null>(null);
   const [view, setView] = useState<ViewKey>('dashboard');
   const [error, setError] = useState<string | null>(null);
+  // Cloud auth: when Supabase is configured, gate the app behind sign-in.
+  const [session, setSession] = useState<Session | null>(supabaseEnabled ? loadSession() : null);
+  const needsLogin = supabaseEnabled && !session;
 
   const reload = useCallback(async () => {
     const [profile, accounts, categories, transactions, merchants, income, incomeSources, buckets, bills, goals] = await Promise.all([
@@ -110,11 +115,14 @@ export function App() {
   }, []);
 
   useEffect(() => {
+    if (needsLogin) return; // wait for sign-in before touching the backend
+    if (supabaseEnabled && session) activateSupabase(session.user.id);
     bootstrap()
       .then(reload)
       .catch((e) => setError(String(e)));
-  }, [reload]);
+  }, [reload, needsLogin, session]);
 
+  if (needsLogin) return <Login onAuthed={setSession} />;
   if (error) return <div className="fatal">Failed to start: {error}</div>;
   if (!data) return <div className="loading">Loading BudgetOS…</div>;
 
@@ -136,8 +144,10 @@ export function App() {
           {FOOT_NAV.map((n) => (
             <NavButton key={n.key} n={n} view={view} setView={setView} />
           ))}
-          <div className="region">🍁 {data.profile.province} · {data.profile.base_currency}</div>
-          <button className="link-btn" onClick={resetLocalData}>Reset local data</button>
+          <div className="region">🍁 {data.profile.province} · {data.profile.base_currency}{db.cloud ? ' · synced' : ''}</div>
+          {db.cloud
+            ? <button className="link-btn" onClick={() => { signOut(); location.reload(); }}>Sign out{session?.user.email ? ` (${session.user.email})` : ''}</button>
+            : <button className="link-btn" onClick={resetLocalData}>Reset local data</button>}
         </div>
       </aside>
 
