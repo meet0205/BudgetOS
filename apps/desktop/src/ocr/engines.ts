@@ -1,6 +1,18 @@
 import { parseReceiptText, type ParsedReceipt } from '@budgetos/core';
 import { getOcrSettings } from './settings.js';
 
+/** The native bridge exposed by the Electron preload (desktop app only). */
+declare global {
+  interface Window {
+    budgetosNative?: {
+      ocrClaude(base64: string, ext: string): Promise<string>;
+      isElectron: boolean;
+    };
+  }
+}
+
+export const inElectron = typeof window !== 'undefined' && !!window.budgetosNative;
+
 export interface ReceiptExtract extends ParsedReceipt {
   text: string;
   engine: string;
@@ -13,8 +25,7 @@ export async function extractReceipt(file: File): Promise<ReceiptExtract> {
     return { merchant: null, date: null, totalMinor: null, text: '', engine: 'off' };
   }
   if (s.engine === 'claude') {
-    if (!s.anthropicKey) throw new Error('Claude OCR needs an Anthropic API key (set it in Settings).');
-    const text = await ocrClaude(file, s.anthropicKey);
+    const text = await ocrClaudeSubscription(file);
     return { ...parseReceiptText(text), text, engine: 'claude' };
   }
   const text = await ocrTesseract(file);
@@ -28,43 +39,28 @@ async function ocrTesseract(file: File): Promise<string> {
   return data.text ?? '';
 }
 
-async function fileToBase64(file: File): Promise<string> {
-  const buf = await file.arrayBuffer();
-  let binary = '';
-  const bytes = new Uint8Array(buf);
-  for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]!);
-  return btoa(binary);
+function fileToBase64(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = reader.result as string;
+      resolve(result.slice(result.indexOf(',') + 1)); // strip the data: prefix
+    };
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(file);
+  });
 }
 
 /**
- * Claude vision OCR. Calls the Anthropic API directly from the browser with the
- * user's own key (there is no subscription-OAuth path for third-party apps).
- * Asks the model to transcribe the receipt so the shared parser handles both
- * engines uniformly.
+ * Claude vision OCR via the user's own Claude Code **subscription** — routed
+ * through the Electron main process, which shells out to the local `claude` CLI.
+ * No API key, no token handling. Only available in the desktop (Electron) app.
  */
-async function ocrClaude(file: File, apiKey: string): Promise<string> {
-  const data = await fileToBase64(file);
-  const res = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: {
-      'x-api-key': apiKey,
-      'anthropic-version': '2023-06-01',
-      'anthropic-dangerous-direct-browser-access': 'true',
-      'content-type': 'application/json',
-    },
-    body: JSON.stringify({
-      model: 'claude-haiku-4-5-20251001',
-      max_tokens: 1024,
-      messages: [{
-        role: 'user',
-        content: [
-          { type: 'image', source: { type: 'base64', media_type: file.type, data } },
-          { type: 'text', text: 'Transcribe this receipt to plain text, preserving line breaks (store name at top, item lines, and the TOTAL line). Output only the transcription.' },
-        ],
-      }],
-    }),
-  });
-  const json = await res.json().catch(() => null);
-  if (!res.ok) throw new Error(json?.error?.message || `Claude OCR failed (${res.status})`);
-  return json?.content?.[0]?.text ?? '';
+async function ocrClaudeSubscription(file: File): Promise<string> {
+  if (!window.budgetosNative) {
+    throw new Error('Claude OCR runs on your Claude Code subscription and needs the BudgetOS desktop app. Start it with: npm run electron (with the dev server running).');
+  }
+  const base64 = await fileToBase64(file);
+  const ext = (file.name.split('.').pop() || 'png').toLowerCase();
+  return window.budgetosNative.ocrClaude(base64, ext);
 }

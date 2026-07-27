@@ -110,7 +110,7 @@ export function Import({ data, reload }: { data: BudgetData; reload: () => Promi
         <div>
           <div className="banner-title">
             {ocrEngine === 'off' ? 'OCR is off — enter details manually'
-              : ocrEngine === 'claude' ? 'OCR: Claude vision'
+              : ocrEngine === 'claude' ? 'OCR: Claude (your subscription)'
               : 'OCR: on-device (Tesseract)'}
           </div>
           <div className="banner-sub">
