@@ -1,0 +1,16 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "installCommand": "ELECTRON_SKIP_BINARY_DOWNLOAD=1 npm install",
+  "buildCommand": "npm run build --workspace @budgetos/desktop",
+  "outputDirectory": "apps/desktop/dist",
+  "framework": null,
+  "build": {
+    "env": {
+      "VITE_SUPABASE_URL": "https://nwpqqtrqfqbkuborynrp.supabase.co",
+      "VITE_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im53cHFxdHJxZnFia3Vib3J5bnJwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ5MDU3MjEsImV4cCI6MjEwMDQ4MTcyMX0.AKBkQn4e5gaJEnfp8DS7EoE_ElGrRBFgBMphN6BETfo"
+    }
+  },
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
