@@ -109,14 +109,12 @@ export function Import({ data, reload }: { data: BudgetData; reload: () => Promi
       <div className="banner" style={{ background: 'var(--bg-accent)' }}>
         <div>
           <div className="banner-title">
-            {ocrEngine === 'off' ? 'OCR is off — enter details manually'
-              : ocrEngine === 'claude' ? 'OCR: Claude (your subscription)'
-              : 'OCR: on-device (Tesseract)'}
+            {ocrEngine === 'off' ? 'OCR is off — enter details manually' : 'OCR: on-device (Tesseract)'}
           </div>
           <div className="banner-sub">
             {ocrEngine === 'off'
               ? 'Turn on receipt OCR in Settings to auto-fill fields.'
-              : 'Drop receipts — fields auto-fill for you to review, then post. Change the engine in Settings.'}
+              : 'Drop receipts — fields auto-fill for you to review, then post. Reading happens on your device.'}
           </div>
         </div>
       </div>

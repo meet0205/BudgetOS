@@ -13,8 +13,7 @@
     "typecheck": "npm run typecheck --workspaces --if-present",
     "gen:seed-sql": "node scripts/gen-seed-sql.mjs",
     "db:push": "node scripts/db-push.mjs",
-    "dev": "npm run dev --workspace @budgetos/desktop",
-    "electron": "npm run electron --workspace @budgetos/desktop"
+    "dev": "npm run dev --workspace @budgetos/desktop"
   },
   "engines": {
     "node": ">=16.0.0"

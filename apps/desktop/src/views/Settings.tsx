@@ -4,7 +4,6 @@ import type { BudgetData } from '../App.js';
 import { db } from '../db.js';
 import { formatDateOnly } from '../format.js';
 import { getOcrSettings, setOcrSettings, type OcrEngine } from '../ocr/settings.js';
-import { inElectron } from '../ocr/engines.js';
 
 const PROVINCES = ['AB', 'BC', 'MB', 'NB', 'NL', 'NS', 'NT', 'NU', 'ON', 'PE', 'QC', 'SK', 'YT'];
 const CURRENCIES = ['CAD', 'USD', 'EUR', 'GBP'];
@@ -122,18 +121,15 @@ function OcrSettings() {
       <div className="settings-grid">
         <Field label="Engine" hint="How receipts are read into fields">
           <select className="input" value={s.engine} onChange={(e) => update({ engine: e.target.value as OcrEngine })}>
-            <option value="tesseract">On-device (Tesseract) — private, no login</option>
-            <option value="claude">Claude — your subscription (desktop app)</option>
+            <option value="tesseract">On-device (Tesseract) — private, works everywhere</option>
             <option value="off">Off — enter manually</option>
           </select>
         </Field>
       </div>
       <p className="muted" style={{ fontSize: 11, marginTop: 8 }}>
-        {s.engine === 'tesseract' && 'On-device: the receipt never leaves your machine. Accuracy varies with photo quality.'}
-        {s.engine === 'claude' && (inElectron
-          ? 'Uses your Claude Code subscription via the desktop app — no API key. The receipt is read by your local Claude, then discarded.'
-          : 'Claude runs on your Claude Code subscription through the desktop (Electron) app — no API key. Open BudgetOS with “npm run electron” (dev server running) for this option to work; in the browser it can’t reach your local Claude.')}
-        {s.engine === 'off' && 'Auto-fill disabled; you type each receipt’s details.'}
+        {s.engine === 'tesseract'
+          ? 'On-device: the receipt is read right in your browser and never leaves your device — same on phone, laptop, or desktop. Accuracy varies with photo quality.'
+          : 'Auto-fill disabled; you type each receipt’s details.'}
       </p>
     </section>
   );

@@ -1,5 +1,5 @@
 /** OCR engine preference, stored locally in the browser. */
-export type OcrEngine = 'off' | 'tesseract' | 'claude';
+export type OcrEngine = 'off' | 'tesseract';
 
 const KEY = 'budgetos.ocr';
 
@@ -10,7 +10,11 @@ export interface OcrSettings {
 export function getOcrSettings(): OcrSettings {
   try {
     const raw = localStorage.getItem(KEY);
-    if (raw) return { engine: 'tesseract', ...(JSON.parse(raw) as Partial<OcrSettings>) };
+    if (raw) {
+      const parsed = JSON.parse(raw) as Partial<OcrSettings>;
+      // Migrate any previously-saved 'claude' choice to the on-device engine.
+      return { engine: parsed.engine === 'off' ? 'off' : 'tesseract' };
+    }
   } catch { /* ignore */ }
   return { engine: 'tesseract' };
 }
