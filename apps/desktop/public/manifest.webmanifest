@@ -1,0 +1,16 @@
+{
+  "name": "BudgetOS",
+  "short_name": "Budget",
+  "description": "Personal budget planner — income, tax, allocation, and safe-to-spend.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f5f5f7",
+  "theme_color": "#1d9e75",
+  "orientation": "portrait-primary",
+  "icons": [
+    { "src": "/pwa-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/pwa-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/pwa-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
