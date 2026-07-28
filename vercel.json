@@ -1,6 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "installCommand": "npm install",
+  "installCommand": "ELECTRON_SKIP_BINARY_DOWNLOAD=1 npm install",
   "buildCommand": "npm run build --workspace @budgetos/desktop",
   "outputDirectory": "apps/desktop/dist",
   "framework": null,

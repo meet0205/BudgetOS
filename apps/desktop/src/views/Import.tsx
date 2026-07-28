@@ -3,8 +3,8 @@ import { toMinor, type Category, type TxnKind, type Minor } from '@budgetos/core
 import type { BudgetData } from '../App.js';
 import { db } from '../db.js';
 import { todayISODate } from '../format.js';
-import { extractReceipt } from '../ocr/engines.js';
-import { getOcrSettings } from '../ocr/settings.js';
+import { extractReceipt, inElectron } from '../ocr/engines.js';
+import { getOcrSettings, ENGINE_LABELS, type OcrEngine } from '../ocr/settings.js';
 
 type OcrStatus = 'reading' | 'done' | 'error' | null;
 
@@ -31,11 +31,13 @@ export function Import({ data, reload }: { data: BudgetData; reload: () => Promi
   const activeAccounts = data.accounts.filter((a) => !a.is_archived);
   const today = todayISODate();
 
-  const ocrEngine = getOcrSettings().engine;
+  // Per-upload engine choice, seeded from the Settings default.
+  const [ocrEngine, setOcrEngine] = useState<OcrEngine>(getOcrSettings().engine);
 
   function addFiles(files: FileList | null) {
     if (!files) return;
-    const willOcr = ocrEngine !== 'off';
+    const engine = ocrEngine;
+    const willOcr = engine !== 'off';
     const items: QueueItem[] = Array.from(files).map((f) => ({
       id: `q${++counter}`,
       fileName: f.name,
@@ -49,10 +51,10 @@ export function Import({ data, reload }: { data: BudgetData; reload: () => Promi
       ocr: willOcr && f.type.startsWith('image/') ? 'reading' : null,
     }));
     setQueue((q) => [...q, ...items]);
-    // Kick off OCR for each image; fill fields as each finishes.
+    // Kick off OCR for each image with the chosen engine; fill fields as each finishes.
     for (const it of items) {
       if (it.ocr !== 'reading') continue;
-      extractReceipt(it.file)
+      extractReceipt(it.file, engine)
         .then((r) => update(it.id, {
           merchant: r.merchant ?? '',
           date: r.date ?? today,
@@ -108,15 +110,22 @@ export function Import({ data, reload }: { data: BudgetData; reload: () => Promi
 
       <div className="banner" style={{ background: 'var(--bg-accent)' }}>
         <div>
-          <div className="banner-title">
-            {ocrEngine === 'off' ? 'OCR is off — enter details manually' : 'OCR: on-device (Tesseract)'}
-          </div>
+          <div className="banner-title">Read receipts with</div>
           <div className="banner-sub">
-            {ocrEngine === 'off'
-              ? 'Turn on receipt OCR in Settings to auto-fill fields.'
-              : 'Drop receipts — fields auto-fill for you to review, then post. Reading happens on your device.'}
+            {ocrEngine === 'off' && 'Auto-fill off — you’ll enter each receipt’s details.'}
+            {ocrEngine === 'local' && 'From-scratch algorithm, on your device. Best on clean/digital receipts; rough on photos.'}
+            {ocrEngine === 'tesseract' && 'On-device Tesseract — private, works on any device.'}
+            {ocrEngine === 'claude' && (inElectron
+              ? 'Your Claude Code subscription (most accurate) — reads locally, no key.'
+              : 'Claude needs the desktop app — in the browser, pick Tesseract or Local instead.')}
           </div>
         </div>
+        <select className="input" value={ocrEngine} onChange={(e) => setOcrEngine(e.target.value as OcrEngine)} style={{ flexShrink: 0 }}>
+          <option value="tesseract">{ENGINE_LABELS.tesseract}</option>
+          <option value="local">{ENGINE_LABELS.local}</option>
+          <option value="claude">{ENGINE_LABELS.claude}</option>
+          <option value="off">{ENGINE_LABELS.off}</option>
+        </select>
       </div>
 
       <label

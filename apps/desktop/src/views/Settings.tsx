@@ -119,17 +119,21 @@ function OcrSettings() {
     <section className="panel">
       <div className="panel-head"><h2>Receipt OCR</h2><span className="muted">reads dropped receipts on the Import screen</span></div>
       <div className="settings-grid">
-        <Field label="Engine" hint="How receipts are read into fields">
+        <Field label="Default engine" hint="Used on the Import screen; you can switch per upload">
           <select className="input" value={s.engine} onChange={(e) => update({ engine: e.target.value as OcrEngine })}>
-            <option value="tesseract">On-device (Tesseract) — private, works everywhere</option>
+            <option value="tesseract">Tesseract (on-device) — private, works everywhere</option>
+            <option value="local">Local algorithm — from scratch, best on clean receipts</option>
+            <option value="claude">Claude — your subscription (desktop app only)</option>
             <option value="off">Off — enter manually</option>
           </select>
         </Field>
       </div>
       <p className="muted" style={{ fontSize: 11, marginTop: 8 }}>
-        {s.engine === 'tesseract'
-          ? 'On-device: the receipt is read right in your browser and never leaves your device — same on phone, laptop, or desktop. Accuracy varies with photo quality.'
-          : 'Auto-fill disabled; you type each receipt’s details.'}
+        Three engines, choosable per upload on the Import screen: <strong>Tesseract</strong> (solid
+        on-device OCR, any device), <strong>Local algorithm</strong> (hand-written, no library — great
+        on clean/digital receipts, rough on photos), and <strong>Claude</strong> (your Claude Code
+        subscription, most accurate — desktop app only, no key). Tesseract and Local run entirely on
+        your device.
       </p>
     </section>
   );
